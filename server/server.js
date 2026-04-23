@@ -11,7 +11,7 @@ import adminAuth from './routes/admin-auth.js';
 import { isEmailEnabled } from './lib/email.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SITE_ROOT = path.resolve(__dirname, '..'); // Susan's Scripts/
+const SITE_ROOT = path.resolve(__dirname); // server/ (contains index.html, blog.html, admin.html, images/)
 
 const app = express();
 app.use(cors());
