@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Susan Graf-Cote LMFT | UAreWell TheraCoach | San Diego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --clay:#B5714F;--clay-lt:#E8C9B8;--clay-dk:#8C4F32;
+  --sage:#6B9B7E;--sage-lt:#D0E3D8;
+  --cream:#F5F0E8;--ivory:#FBF8F3;
+  --charcoal:#1E1A16;--warm-dk:#2E2520;--mid:#6B5A50;
+  --gold:#C49A5A;--gold-lt:#E8D5A8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--ivory);color:var(--charcoal);overflow-x:hidden;}
+
+/* ══ CUSTOM CURSOR ══ */
+@media(hover:hover) and (pointer:fine){
+  *,a,button{cursor:none !important;}
+}
+#cur{position:fixed;width:7px;height:7px;border-radius:50%;background:var(--clay);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s cubic-bezier(.25,.46,.45,.94),height .18s cubic-bezier(.25,.46,.45,.94),background .18s,opacity .2s;mix-blend-mode:multiply;opacity:0;}
+#cur-ring{position:fixed;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(181,113,79,.55);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .38s cubic-bezier(.25,.46,.45,.94),height .38s cubic-bezier(.25,.46,.45,.94),border-color .3s,opacity .3s;opacity:0;}
+.cursor-active #cur{opacity:1;}
+.cursor-active #cur-ring{opacity:1;}
+.cur-hover #cur{width:12px;height:12px;background:var(--clay-dk);}
+.cur-hover #cur-ring{width:48px;height:48px;border-color:rgba(140,79,50,.3);border-width:1px;}
+.cur-click #cur{width:5px;height:5px;transition-duration:.08s;}
+.cur-click #cur-ring{width:22px;height:22px;transition-duration:.12s;}
+@media(hover:none),(pointer:coarse){#cur,#cur-ring{display:none !important;}}
+
+/* ══ PROGRESS BAR ══ */
+#pbar{position:fixed;top:0;left:0;height:2px;width:0%;z-index:10000;background:linear-gradient(90deg,var(--clay-dk),var(--clay),var(--gold));transition:width .05s linear;box-shadow:0 0 8px rgba(181,113,79,.6);}
+
+/* ══ PAGE LOADER ══ */
+#loader{position:fixed;inset:0;background:var(--charcoal);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;transition:opacity .6s,visibility .6s;}
+#loader.done{opacity:0;visibility:hidden;}
+.loader-logo{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:#fff;letter-spacing:.08em;}
+.loader-logo em{color:var(--clay);font-style:italic;}
+.loader-bar{width:200px;height:1px;background:rgba(255,255,255,.12);position:relative;overflow:hidden;}
+.loader-bar::after{content:'';position:absolute;left:-100%;top:0;bottom:0;width:100%;background:linear-gradient(90deg,transparent,var(--clay),transparent);animation:loaderSlide 1.2s ease forwards;}
+@keyframes loaderSlide{to{left:100%;}}
+.loader-pct{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+
+/* ══ IDENTITY BAR ══ */
+.ib{background:var(--charcoal);padding:1.2rem 0;text-align:center;position:relative;overflow:hidden;}
+.ib::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(181,113,79,.14),transparent);animation:ibShimmer 4s ease-in-out infinite;}
+@keyframes ibShimmer{0%,100%{opacity:0.5;}50%{opacity:1;}}
+.ib::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--clay),transparent);}
+.ib-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.28rem;}
+.ib-name{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3.2vw,2.2rem);font-weight:700;letter-spacing:.05em;color:#fff;text-shadow:0 2px 18px rgba(181,113,79,.5);animation:slideDown .7s .1s ease both;}
+.ib-brand{font-size:.85rem;letter-spacing:.28em;text-transform:uppercase;color:var(--clay);font-weight:500;animation:slideDown .7s .25s ease both;}
+.ib-tags{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;justify-content:center;animation:slideDown .7s .4s ease both;}
+.ib-tags .dot{color:var(--clay);opacity:.9;}
+
+/* ══ NAV ══ */
+nav{position:sticky;top:0;z-index:990;display:flex;justify-content:space-between;align-items:center;padding:.85rem 4rem;background:rgba(251,248,243,.96);backdrop-filter:blur(18px);border-bottom:1px solid rgba(181,113,79,.13);box-shadow:0 2px 24px rgba(0,0,0,.06);animation:navIn .5s .1s ease both;flex-wrap:nowrap;white-space:nowrap;}
+@keyframes navIn{from{transform:translateY(-100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;letter-spacing:.04em;color:var(--charcoal);text-decoration:none;transition:letter-spacing .3s;}
+.nav-logo:hover{letter-spacing:.08em;}
+.nav-logo em{color:var(--clay);font-style:italic;}
+.nav-links{display:flex;gap:1.6rem;list-style:none;flex-wrap:nowrap;align-items:center;white-space:nowrap;}
+.nav-links a{text-decoration:none;font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);transition:color .25s;position:relative;padding-bottom:3px;white-space:nowrap;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--clay);transition:width .3s ease;}
+.nav-links a:hover{color:var(--clay);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{background:var(--clay) !important;color:#fff !important;padding:.5rem 1.3rem;border-radius:1px;overflow:hidden;position:relative;white-space:nowrap;}
+.nav-cta::before{content:'';position:absolute;inset:0;background:var(--clay-dk);transform:translateY(100%);transition:transform .3s ease;z-index:0;}
+.nav-cta:hover::before{transform:translateY(0);}
+.nav-cta span{position:relative;z-index:1;}
+.nav-cta::after{display:none !important;}
+.nav-cta:hover{color:#fff !important;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--charcoal);transition:all .3s;}
+
+/* ══ HERO ══ */
+#hero{min-height:calc(100vh - 90px);display:grid;grid-template-columns:54% 46%;background:var(--cream);overflow:hidden;position:relative;}
+#hero-canvas{position:absolute;inset:0;pointer-events:none;z-index:0;}
+.hero-text{display:flex;flex-direction:column;justify-content:center;padding:5.5rem 4rem 5rem 8rem;position:relative;z-index:2;}
+.h-ey{font-size:.65rem;letter-spacing:.26em;text-transform:uppercase;color:var(--clay);margin-bottom:1.8rem;display:flex;align-items:center;gap:.8rem;opacity:0;animation:fadeUp .7s .5s ease forwards;}
+.h-ey::before{content:'';display:block;width:0;height:1px;background:var(--clay);animation:lineGrow 1s 1s ease forwards;}
+@keyframes lineGrow{to{width:40px;}}
+
+/* Split text headline */
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4vw,4.8rem);font-weight:400;line-height:1.12;color:var(--charcoal);margin-bottom:1.3rem;}
+.hero-h1 em{color:var(--clay);font-style:italic;}
+.hero-h1 .stroke{-webkit-text-stroke:1.5px var(--charcoal);color:transparent;font-style:italic;}
+.split-line{display:block;overflow:hidden;}
+.split-word{display:inline-block;transform:translateY(110%);opacity:0;animation:wordUp .7s ease forwards;}
+
+.hero-name-card{display:inline-flex;flex-direction:column;background:var(--charcoal);padding:.9rem 1.7rem;border-left:3px solid var(--clay);margin-bottom:1.8rem;opacity:0;animation:fadeUp .6s 1.5s ease forwards;position:relative;overflow:hidden;}
+.hero-name-card::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);animation:shimCard 3s 2.5s ease-in-out infinite;}
+@keyframes shimCard{to{left:150%;}}
+.hnc-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;color:#fff;letter-spacing:.04em;}
+.hnc-title{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--clay);margin-top:.22rem;}
+.hero-sub{font-size:.93rem;line-height:1.88;color:var(--mid);max-width:430px;margin-bottom:2.3rem;font-weight:300;opacity:0;animation:fadeUp .6s 1.7s ease forwards;}
+
+/* Magnetic buttons */
+.hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.8rem;opacity:0;animation:fadeUp .6s 1.9s ease forwards;}
+.btn{display:inline-flex;align-items:center;gap:.55rem;padding:.85rem 1.9rem;font-family:'Jost',sans-serif;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-radius:1px;border:none;position:relative;overflow:hidden;transition:transform .15s,box-shadow .3s;}
+.btn-solid{background:var(--clay);color:#fff;}
+.btn-solid::before{content:'';position:absolute;inset:0;background:var(--clay-dk);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;z-index:0;}
+.btn-solid:hover::before{transform:scaleX(1);}
+.btn-solid:hover{box-shadow:0 10px 30px rgba(181,113,79,.4);}
+.btn-solid span,.btn-solid svg{position:relative;z-index:1;}
+.btn-ghost{background:transparent;color:var(--charcoal);border:1.5px solid var(--charcoal);}
+.btn-ghost::before{content:'';position:absolute;inset:0;background:var(--charcoal);transform:scaleY(0);transform-origin:bottom;transition:transform .35s ease;z-index:0;}
+.btn-ghost:hover{color:#fff;border-color:var(--charcoal);}
+.btn-ghost:hover::before{transform:scaleY(1);}
+.btn-ghost span,.btn-ghost svg{position:relative;z-index:1;}
+
+/* Ripple on click */
+.btn .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:rippleAnim .6s linear;pointer-events:none;}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0;}}
+
+.hero-stats{display:flex;gap:1.8rem;flex-wrap:wrap;opacity:0;animation:fadeUp .6s 2.1s ease forwards;}
+.hstat{border-left:2px solid var(--clay-lt);padding-left:.9rem;transition:border-color .3s;}
+.hstat:hover{border-left-color:var(--clay);}
+.hstat-n{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:400;color:var(--clay);line-height:1;}
+.hstat-l{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-top:.2rem;}
+
+/* ══ HERO RIGHT ══ */
+.hero-photo{position:relative;overflow:hidden;}
+.hero-photo::before{content:'';position:absolute;inset:0;background:linear-gradient(150deg,var(--sage-lt) 0%,var(--clay-lt) 55%,var(--gold-lt) 100%);}
+.hero-photo::after{content:'';position:absolute;top:0;left:0;bottom:0;width:50px;background:linear-gradient(to right,var(--cream),transparent);z-index:3;}
+.hp-blob{position:absolute;top:4%;left:6%;right:6%;bottom:4%;border-radius:52% 48% 44% 56%/48% 52% 48% 52%;background:rgba(255,255,255,.18);animation:blob 12s ease-in-out infinite;z-index:1;}
+@keyframes blob{0%,100%{border-radius:52% 48% 44% 56%/48% 52% 48% 52%;}25%{border-radius:44% 56% 60% 40%/50% 42% 58% 50%;}50%{border-radius:56% 44% 48% 52%/44% 60% 40% 56%;}75%{border-radius:48% 52% 40% 60%/58% 48% 52% 42%;}}
+.photo-frame{position:absolute;z-index:2;top:5%;left:10%;right:10%;bottom:3%;border-radius:48% 52% 45% 55%/50% 48% 52% 50%;overflow:hidden;box-shadow:0 32px 90px rgba(30,26,22,.28);animation:blob 12s ease-in-out infinite,photoIn .9s 2s ease both;}
+@keyframes photoIn{from{opacity:0;transform:scale(.94) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.photo-inner{width:100%;height:100%;background:linear-gradient(165deg,#ddd0bc 0%,#c8a880 40%,#a87850 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:2.5rem;position:relative;}
+.photo-inner svg.sil{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:68%;opacity:.22;}
+.photo-label{position:relative;z-index:2;background:rgba(20,16,12,.72);backdrop-filter:blur(8px);color:var(--ivory);padding:.6rem 1.3rem;border-radius:1px;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;}
+
+/* Floating chips */
+.chip{position:absolute;z-index:5;background:rgba(251,248,243,.96);backdrop-filter:blur(8px);border:1px solid rgba(181,113,79,.22);border-radius:2px;padding:.52rem 1rem;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--charcoal);box-shadow:0 8px 24px rgba(0,0,0,.1);animation:chipFloat 3.5s ease-in-out infinite;}
+.chip .cd{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--clay);margin-right:.45rem;flex-shrink:0;}
+.ch1{top:11%;right:-1%;transform:rotate(-2deg);animation-delay:0s;opacity:0;animation:chipIn .5s 2.5s ease forwards, chipFloat 3.5s 3s ease-in-out infinite;}
+.ch2{bottom:24%;right:-2%;transform:rotate(1.5deg);animation-delay:0s;opacity:0;animation:chipIn .5s 2.8s ease forwards, chipFloat 3.5s 3.3s ease-in-out infinite;}
+.ch3{bottom:7%;left:1%;transform:rotate(-1deg);animation-delay:0s;opacity:0;animation:chipIn .5s 3.1s ease forwards, chipFloat 3.5s 3.6s ease-in-out infinite;}
+@keyframes chipIn{to{opacity:1;}}
+@keyframes chipFloat{0%,100%{transform:translateY(0) rotate(var(--cr,0deg));}50%{transform:translateY(-7px) rotate(var(--cr,0deg));}}
+.ch1{--cr:-2deg;}.ch2{--cr:1.5deg;}.ch3{--cr:-1deg;}
+.hp-ring{position:absolute;z-index:1;top:2%;right:5%;width:90px;height:90px;border-radius:50%;border:1px solid var(--gold);opacity:0;animation:ringIn 3s 3s ease-in-out infinite;}
+.hp-ring2{position:absolute;z-index:1;bottom:7%;left:3%;width:65px;height:65px;border-radius:50%;border:1px solid var(--clay);opacity:0;animation:ringIn 3s 4s ease-in-out infinite;}
+@keyframes ringIn{0%{opacity:0;transform:scale(.8);}40%{opacity:.4;}100%{opacity:.12;transform:scale(1.15);}}
+.hp-lines{position:absolute;top:0;right:0;width:140px;height:100%;z-index:1;opacity:.05;background-image:repeating-linear-gradient(90deg,var(--charcoal) 0,var(--charcoal) 1px,transparent 1px,transparent 22px);}
+
+/* ══ TICKER ══ */
+.ticker{background:var(--clay);padding:.85rem 0;overflow:hidden;position:relative;}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;}
+.ticker::before{left:0;background:linear-gradient(to right,var(--clay),transparent);}
+.ticker::after{right:0;background:linear-gradient(to left,var(--clay),transparent);}
+.t-track{display:flex;gap:3rem;white-space:nowrap;animation:tick 32s linear infinite;}
+.t-track span{font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.85);}
+.t-track .dot{color:rgba(255,255,255,.4);}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker:hover .t-track{animation-play-state:paused;}
+
+/* ══ SHARED ══ */
+section{padding:7rem 0;}
+.container{max-width:1180px;margin:0 auto;padding:0 2rem;}
+.eyebrow{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--clay);font-weight:400;margin-bottom:1.1rem;display:flex;align-items:center;gap:.7rem;}
+.eyebrow::before{content:'';display:block;width:26px;height:1px;background:var(--clay);}
+.eyebrow.c{justify-content:center;}.eyebrow.c::before{display:none;}
+h2.st{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3vw,3rem);font-weight:400;line-height:1.2;color:var(--charcoal);margin-bottom:1.2rem;}
+h2.st em{font-style:italic;color:var(--clay);}
+h2.st.lt{color:#fff;}
+.bt{font-size:.94rem;line-height:1.9;color:var(--mid);font-weight:300;}
+
+/* ══ SCROLL REVEAL SYSTEM ══ */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rv-l{opacity:0;transform:translateX(-50px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rv-r{opacity:0;transform:translateX(50px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rv-s{opacity:0;transform:scale(.88);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rv-r1,.rv-l1,.rv-s1,.rv1{transition-delay:.1s;}
+.rv-r2,.rv-l2,.rv-s2,.rv2{transition-delay:.2s;}
+.rv-r3,.rv-l3,.rv-s3,.rv3{transition-delay:.3s;}
+.rv-r4,.rv-l4,.rv-s4,.rv4{transition-delay:.4s;}
+.rv-r5,.rv-l5,.rv-s5,.rv5{transition-delay:.5s;}
+.in{opacity:1 !important;transform:none !important;}
+
+/* ══ ABOUT ══ */
+#about{background:var(--ivory);}
+.about-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:5.5rem;align-items:start;}
+.apc-wrap{position:relative;}
+.apc-ring{position:absolute;top:-16px;right:-16px;width:110px;height:110px;border:1.5px solid var(--clay-lt);border-radius:2px;z-index:-1;animation:ringPulse 4s ease-in-out infinite;}
+@keyframes ringPulse{0%,100%{opacity:.5;transform:scale(1) rotate(0deg);}50%{opacity:1;transform:scale(1.06) rotate(2deg);}}
+.apc-dot{position:absolute;bottom:-20px;left:-20px;width:75px;height:75px;border-radius:50%;background:var(--sage-lt);z-index:-1;animation:dotPulse 3.5s ease-in-out infinite;}
+@keyframes dotPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.18);}}
+.apc-frame{position:relative;padding-bottom:128%;border-radius:2px;overflow:hidden;}
+.apc-inner{position:absolute;inset:0;background:linear-gradient(170deg,#ddd0bc 0%,#c8a880 45%,#a07050 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:2.5rem;}
+.apc-inner svg.sil{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:64%;opacity:.2;}
+.apc-badge{position:relative;z-index:2;background:rgba(20,16,12,.72);backdrop-filter:blur(8px);color:var(--ivory);padding:.62rem 1.4rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:.45rem;}
+/* Parallax image effect */
+.apc-frame{transform-style:preserve-3d;}
+.about-pull{margin-top:1.8rem;background:var(--cream);padding:1.7rem;border-left:3px solid var(--clay);position:relative;overflow:hidden;}
+.about-pull::after{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;background:var(--clay-lt);opacity:.25;animation:dotPulse 4s ease-in-out infinite;}
+.about-pull blockquote{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;font-weight:400;line-height:1.65;color:var(--charcoal);}
+.about-pull cite{display:block;margin-top:.7rem;font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--clay);font-style:normal;}
+.about-text .bt p{margin-bottom:1.2rem;}
+.creds-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:2rem;}
+.ci{background:var(--cream);border:1px solid rgba(181,113,79,.18);padding:.68rem 1rem;border-radius:1px;font-size:.77rem;color:var(--mid);display:flex;align-items:center;gap:.55rem;transition:all .3s;position:relative;overflow:hidden;}
+.ci::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--clay);transform:scaleY(0);transform-origin:bottom;transition:transform .3s;}
+.ci:hover{background:var(--clay-lt);border-color:var(--clay);transform:translateX(5px);}
+.ci:hover::before{transform:scaleY(1);}
+.ci::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--clay);flex-shrink:0;}
+
+/* ══ MISSION ══ */
+#mission{background:var(--charcoal);position:relative;overflow:hidden;padding:6rem 0;}
+/* Animated gradient bg */
+#mission::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(181,113,79,.1),transparent 70%);animation:orb 9s ease-in-out infinite;}
+#mission::after{content:'';position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(107,155,126,.08),transparent 70%);animation:orb2 11s ease-in-out infinite;}
+@keyframes orb{0%,100%{transform:scale(1) translate(0,0);}33%{transform:scale(1.2) translate(-40px,30px);}66%{transform:scale(.9) translate(20px,-20px);}}
+@keyframes orb2{0%,100%{transform:scale(1) translate(0,0);}50%{transform:scale(1.3) translate(30px,-25px);}}
+/* SVG grid pattern overlay */
+.mission-grid-pat{position:absolute;inset:0;opacity:.03;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:40px 40px;}
+.mission-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1;}
+.mission-layout .bt{color:rgba(245,240,232,.58);}
+.m-cards{display:flex;flex-direction:column;gap:.95rem;}
+.mc{display:flex;gap:1.2rem;align-items:flex-start;padding:1.3rem 1.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:1px;transition:all .3s;position:relative;overflow:hidden;}
+.mc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--clay);transform:scaleY(0);transform-origin:top;transition:transform .4s;}
+.mc:hover{background:rgba(181,113,79,.1);border-color:rgba(181,113,79,.25);transform:translateX(6px);}
+.mc:hover::before{transform:scaleY(1);}
+.mc-ico{width:38px;height:38px;border-radius:50%;background:rgba(181,113,79,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,transform .3s;}
+.mc:hover .mc-ico{background:rgba(181,113,79,.35);transform:rotate(10deg);}
+.mc-ico svg{width:18px;height:18px;stroke:var(--clay);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.mc h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:#fff;margin-bottom:.28rem;}
+.mc p{font-size:.81rem;line-height:1.7;color:rgba(245,240,232,.48);}
+
+/* ══ COUNTER STRIP ══ */
+.counter-strip{background:var(--clay);padding:3.8rem 0;position:relative;overflow:hidden;}
+.counter-strip::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--clay-dk),var(--clay),var(--clay-dk));opacity:.4;animation:csBg 6s ease-in-out infinite;}
+@keyframes csBg{0%,100%{opacity:.2;}50%{opacity:.6;}}
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;position:relative;z-index:1;}
+.c-item{position:relative;}
+.c-item::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:rgba(255,255,255,.2);}
+.c-item:last-child::after{display:none;}
+.c-n{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:400;color:#fff;line-height:1;display:block;}
+.c-l{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-top:.4rem;display:block;}
+
+/* ══ SERVICES ══ */
+#services{background:var(--cream);}
+.srv-hdr{text-align:center;margin-bottom:3.8rem;}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.scard{background:var(--ivory);padding:2.7rem 2.1rem;border-radius:1px;position:relative;overflow:hidden;border:1px solid rgba(181,113,79,.1);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;}
+/* Hover spotlight */
+.scard::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--clay-dk),var(--clay),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .45s ease;}
+.scard:hover{transform:translateY(-10px);box-shadow:0 28px 60px rgba(30,26,22,.12);}
+.scard:hover::after{transform:scaleX(1);}
+.scard.dark{background:var(--charcoal);}
+.scard.dark::after{background:linear-gradient(90deg,var(--gold),var(--clay),var(--gold));}
+.sc-ico{width:50px;height:50px;background:var(--clay-lt);border-radius:2px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;transition:background .3s,transform .4s;}
+.scard:hover .sc-ico{background:var(--clay);transform:rotate(8deg) scale(1.08);}
+.scard.dark .sc-ico{background:rgba(181,113,79,.2);}
+.scard.dark:hover .sc-ico{background:rgba(181,113,79,.45);}
+.sc-ico svg{width:22px;height:22px;stroke:var(--clay-dk);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s;}
+.scard:hover .sc-ico svg{stroke:#fff;}
+.scard.dark .sc-ico svg{stroke:var(--clay-lt);}
+.scard-tag{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);margin-bottom:.65rem;}
+.scard h3{font-family:'Playfair Display',serif;font-size:1.42rem;font-weight:400;margin-bottom:.9rem;line-height:1.3;color:var(--charcoal);}
+.scard.dark h3{color:var(--cream);}
+.scard p{font-size:.86rem;color:var(--mid);line-height:1.8;}
+.scard.dark p{color:rgba(245,240,232,.52);}
+.scard .btn{margin-top:1.8rem;font-size:.7rem;padding:.68rem 1.4rem;}
+.sw{margin-top:1.4rem;display:grid;grid-template-columns:auto 1fr auto;gap:2.5rem;align-items:center;background:var(--ivory);border:1px solid rgba(181,113,79,.1);padding:2.2rem 2.8rem;border-radius:1px;transition:all .4s cubic-bezier(.16,1,.3,1);}
+.sw:hover{box-shadow:0 14px 44px rgba(30,26,22,.1);transform:translateY(-3px);}
+.sw-ico{width:62px;height:62px;border-radius:50%;background:var(--clay-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,transform .4s;}
+.sw:hover .sw-ico{background:var(--clay);transform:scale(1.1) rotate(-5deg);}
+.sw-ico svg{width:26px;height:26px;stroke:var(--clay-dk);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s;}
+.sw:hover .sw-ico svg{stroke:#fff;}
+.sw h3{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:400;color:var(--charcoal);margin-bottom:.4rem;}
+
+/* ══ SPECIALTIES ══ */
+#specialties{background:var(--ivory);}
+.spec-layout{display:grid;grid-template-columns:1fr 1.25fr;gap:5rem;align-items:center;}
+.pill-cloud{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.8rem;}
+.pill{background:var(--cream);border:1px solid rgba(181,113,79,.18);border-radius:50px;padding:.48rem 1.1rem;font-size:.78rem;color:var(--charcoal);transition:all .25s;position:relative;overflow:hidden;}
+.pill::before{content:'';position:absolute;inset:0;background:var(--clay);transform:scale(0);border-radius:50px;transition:transform .35s ease;z-index:0;}
+.pill:hover{color:#fff;border-color:var(--clay);transform:scale(1.06);box-shadow:0 6px 18px rgba(181,113,79,.3);}
+.pill:hover::before{transform:scale(1);}
+.pill span{position:relative;z-index:1;}
+.bubbles{position:relative;height:400px;}
+.bub{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Playfair Display',serif;font-size:.88rem;font-style:italic;color:var(--charcoal);padding:1rem;line-height:1.3;}
+.b1{width:186px;height:186px;background:rgba(181,113,79,.14);top:0;left:50%;animation:floatC 7s ease-in-out infinite;}
+.b2{width:140px;height:140px;background:rgba(107,155,126,.17);top:40%;left:2%;animation:floatY 7s ease-in-out infinite;animation-delay:-2.5s;}
+.b3{width:120px;height:120px;background:rgba(196,154,90,.14);top:42%;right:2%;animation:floatY 7s ease-in-out infinite;animation-delay:-5s;}
+.b4{width:100px;height:100px;background:rgba(181,113,79,.1);bottom:2%;left:28%;animation:floatY 7s ease-in-out infinite;animation-delay:-1.5s;}
+@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+@keyframes floatC{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-14px);}}
+
+/* ══ BENEFITS ══ */
+#benefits{background:var(--warm-dk);}
+.ben-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.15rem;margin-top:3.5rem;}
+.bi{padding:1.8rem 1.4rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:1px;transition:all .35s;position:relative;overflow:hidden;}
+.bi::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(181,113,79,.1),transparent);opacity:0;transition:opacity .3s;}
+.bi:hover{border-color:rgba(181,113,79,.3);transform:translateY(-5px);}
+.bi:hover::before{opacity:1;}
+.bi-ico{width:46px;height:46px;background:rgba(181,113,79,.15);border-radius:2px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;transition:background .3s,transform .4s;}
+.bi:hover .bi-ico{background:rgba(181,113,79,.35);transform:rotate(-8deg);}
+.bi-ico svg{width:20px;height:20px;stroke:var(--clay-lt);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.bi h4{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:#fff;margin-bottom:.45rem;}
+.bi p{font-size:.8rem;line-height:1.75;color:rgba(245,240,232,.45);}
+
+/* ══ METHODS ══ */
+#methods{background:var(--cream);}
+.meth-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:start;}
+.meth-list{display:flex;flex-direction:column;gap:.85rem;margin-top:1.8rem;}
+.mi{display:grid;grid-template-columns:44px 1fr;gap:.9rem;align-items:start;padding:1.15rem;background:var(--ivory);border-radius:1px;border-left:2px solid transparent;transition:all .3s;position:relative;overflow:hidden;}
+.mi::before{content:'';position:absolute;inset:0;background:var(--sage-lt);transform:translateX(-101%);transition:transform .4s ease;z-index:0;}
+.mi:hover{border-left-color:var(--clay);transform:translateX(4px);}
+.mi:hover::before{transform:translateX(0);}
+.mi>*{position:relative;z-index:1;}
+.mi-b{width:36px;height:36px;border-radius:50%;background:var(--clay-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,transform .3s;}
+.mi:hover .mi-b{background:var(--clay);transform:scale(1.1);}
+.mi-b svg{width:17px;height:17px;stroke:var(--clay-dk);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s;}
+.mi:hover .mi-b svg{stroke:#fff;}
+.mi h4{font-size:.86rem;font-weight:500;margin-bottom:.2rem;}
+.mi p{font-size:.79rem;color:var(--mid);line-height:1.6;}
+.meth-aside{display:flex;flex-direction:column;gap:1.5rem;}
+.mq{background:var(--charcoal);padding:2.6rem;border-radius:1px;position:relative;overflow:hidden;}
+.mq::before{content:'\201C';font-family:'Playfair Display',serif;font-size:9rem;line-height:.7;color:rgba(181,113,79,.13);position:absolute;top:.8rem;left:1.2rem;}
+/* Animated border */
+.mq::after{content:'';position:absolute;inset:0;border:1px solid rgba(181,113,79,.0);border-radius:1px;animation:borderGlow 4s ease-in-out infinite;}
+@keyframes borderGlow{0%,100%{border-color:rgba(181,113,79,.0);}50%{border-color:rgba(181,113,79,.25);}}
+.mq blockquote{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;font-weight:400;line-height:1.65;color:var(--cream);position:relative;z-index:1;}
+.mq cite{display:block;margin-top:1rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--clay);font-style:normal;}
+.also-box{background:var(--sage-lt);padding:1.8rem;border-radius:1px;}
+.also-pills{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.9rem;}
+.also-pills .pill{background:rgba(255,255,255,.72);}
+
+/* ══ TESTIMONIALS ══ */
+#testimonials{background:var(--ivory);}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.tc{background:var(--cream);padding:2.2rem;border-radius:1px;border-top:3px solid var(--clay-lt);transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
+/* Spotlight hover */
+.tc::before{content:'';position:absolute;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(181,113,79,.1),transparent 70%);top:-50px;right:-50px;opacity:0;transition:opacity .4s;}
+.tc:hover{transform:translateY(-6px);border-top-color:var(--clay);box-shadow:0 16px 44px rgba(30,26,22,.1);}
+.tc:hover::before{opacity:1;}
+.tc-stars{color:var(--gold);letter-spacing:.15em;font-size:.88rem;margin-bottom:.9rem;display:flex;gap:.18rem;}
+.tc-stars svg{width:16px;height:16px;fill:var(--gold);stroke:var(--gold);stroke-width:1;}
+.tc blockquote{font-family:'Playfair Display',serif;font-size:1.02rem;font-style:italic;font-weight:400;line-height:1.7;color:var(--charcoal);margin-bottom:1.1rem;}
+.tc cite{font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);font-style:normal;}
+
+/* ══ BLOG PREVIEW ══ */
+#blog-prev{background:var(--cream);}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.bcard{background:var(--ivory);border-radius:1px;overflow:hidden;border:1px solid rgba(181,113,79,.1);transition:all .45s cubic-bezier(.16,1,.3,1);}
+.bcard:hover{transform:translateY(-9px);box-shadow:0 28px 64px rgba(30,26,22,.12);}
+.bcard-img{height:180px;overflow:hidden;position:relative;}
+.bcard-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .55s ease;}
+.bcard:hover .bcard-img-inner{transform:scale(1.08);}
+.bcard-img-inner svg{width:48px;height:48px;opacity:.3;}
+.bcard-body{padding:1.7rem;}
+.bcard-cat{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);margin-bottom:.5rem;}
+.bcard-body h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:400;margin-bottom:.7rem;line-height:1.4;color:var(--charcoal);}
+.bcard-body p{font-size:.82rem;color:var(--mid);line-height:1.7;margin-bottom:1rem;}
+.rd-link{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:gap .25s;}
+.rd-link svg{width:13px;height:13px;stroke:var(--clay);fill:none;stroke-width:2;transition:transform .25s;}
+.rd-link:hover{gap:.7rem;}
+.rd-link:hover svg{transform:translateX(3px);}
+.blog-cta{text-align:center;margin-top:2.5rem;}
+
+/* ══ CONTACT ══ */
+#contact{background:var(--cream);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;align-items:start;}
+.ci-it{display:flex;gap:.95rem;align-items:flex-start;margin-bottom:1.4rem;transition:transform .2s;}
+.ci-it:hover{transform:translateX(5px);}
+.ci-ico{width:42px;height:42px;border-radius:50%;background:var(--clay-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,transform .3s;}
+.ci-it:hover .ci-ico{background:var(--clay);transform:scale(1.12);}
+.ci-ico svg{width:18px;height:18px;stroke:var(--clay-dk);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s;}
+.ci-it:hover .ci-ico svg{stroke:#fff;}
+.ci-it h5{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--clay);margin-bottom:.22rem;}
+.ci-it p,.ci-it a{font-size:.88rem;color:var(--mid);text-decoration:none;line-height:1.6;transition:color .2s;}
+.ci-it a:hover{color:var(--clay);}
+.cform{background:var(--ivory);padding:2.8rem;border-radius:1px;border:1px solid rgba(181,113,79,.12);position:relative;overflow:hidden;}
+/* Form shimmer on focus */
+.cform::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--clay),transparent);transition:left .5s ease;}
+.cform:focus-within::before{left:100%;}
+.cform h3{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;margin-bottom:1.8rem;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
+.fg{display:flex;flex-direction:column;gap:.38rem;margin-bottom:.9rem;}
+.fg label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);}
+.fg input,.fg select,.fg textarea{background:#fff;border:1px solid #e0d8d0;border-radius:1px;padding:.75rem .95rem;font-family:'Jost',sans-serif;font-size:.88rem;color:var(--charcoal);transition:border-color .25s,box-shadow .25s,transform .2s;outline:none;width:100%;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--clay);box-shadow:0 0 0 3px rgba(181,113,79,.1);transform:translateY(-1px);}
+.fg textarea{resize:vertical;min-height:100px;}
+.cform .btn{width:100%;justify-content:center;}
+
+/* ══ FOOTER ══ */
+footer{background:var(--charcoal);color:var(--cream);padding:3.5rem 0 2rem;}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem;}
+.fb .nav-logo{display:block;margin-bottom:.5rem;color:var(--cream);transition:letter-spacing .3s;}
+.fb .nav-logo:hover{letter-spacing:.08em;}
+.fb .nav-logo em{color:var(--clay);}
+.fb-name{font-family:'Playfair Display',serif;font-size:.82rem;color:var(--clay-lt);margin-bottom:.8rem;font-style:italic;}
+.fb p{font-size:.82rem;color:rgba(245,240,232,.42);line-height:1.75;max-width:275px;}
+.fc h5{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);margin-bottom:1.1rem;}
+.fc a,.fc p{display:block;text-decoration:none;font-size:.82rem;color:rgba(245,240,232,.42);margin-bottom:.52rem;line-height:1.6;transition:color .2s,transform .2s;}
+.fc a:hover{color:var(--clay);transform:translateX(4px);}
+.footer-bot{border-top:1px solid rgba(255,255,255,.06);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;}
+.footer-bot p{font-size:.7rem;color:rgba(245,240,232,.26);}
+
+/* ══ MOBILE MENU ══ */
+.mob{display:none;position:fixed;inset:0;background:var(--ivory);z-index:1001;flex-direction:column;justify-content:center;align-items:center;gap:2rem;}
+.mob.open{display:flex;}
+.mob a{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:400;text-decoration:none;color:var(--charcoal);transition:color .2s,transform .25s;}
+.mob a:hover{color:var(--clay);transform:translateX(8px);}
+.mob-x{position:absolute;top:1.8rem;right:2.5rem;background:none;border:none;font-size:2rem;color:var(--charcoal);}
+
+/* ══ KEYFRAMES ══ */
+@keyframes slideDown{from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes wordUp{to{opacity:1;transform:translateY(0);}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px){
+  #hero{grid-template-columns:1fr;}
+  .hero-text{padding:5rem 2.5rem 3.5rem;}
+  .hero-photo{height:52vw;min-height:320px;}
+  .hero-photo::after{display:none;}
+  .ch1,.ch2,.ch3{display:none;}
+  .about-grid,.mission-layout,.spec-layout,.meth-layout,.contact-grid{grid-template-columns:1fr;gap:3rem;}
+  .ben-grid{grid-template-columns:1fr 1fr;}
+  .test-grid{grid-template-columns:1fr 1fr;}
+  .srv-grid{grid-template-columns:1fr 1fr;}
+  .blog-grid{grid-template-columns:1fr 1fr;}
+  .counter-grid{grid-template-columns:1fr 1fr;}
+  nav{padding:.85rem 1.5rem;}
+  .nav-links{gap:1.2rem;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .sw{grid-template-columns:1fr;gap:1rem;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .srv-grid,.ben-grid,.test-grid,.blog-grid{grid-template-columns:1fr;}
+  .creds-grid,.frow{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bot{flex-direction:column;text-align:center;}
+  .counter-grid{grid-template-columns:1fr 1fr;}
+  /* Hero mobile */
+  .hero-h1{font-size:clamp(2rem,9vw,3rem);}
+  .hero-sub{font-size:.88rem;}
+  .hero-text{padding:4rem 1.5rem 3rem;}
+  .hero-photo{height:65vw;min-height:280px;}
+  .hero-btns{flex-direction:column;align-items:flex-start;gap:.6rem;}
+  .hero-btns .btn{width:100%;justify-content:center;}
+  .hero-stats{gap:1.2rem;}
+  /* About mobile */
+  .apc-frame{padding-bottom:100%;}
+  .about-pull{margin-top:1.2rem;}
+  /* Sections */
+  section{padding:4.5rem 0;}
+  .container{padding:0 1.25rem;}
+  h2.st{font-size:clamp(1.6rem,6vw,2.2rem);}
+  /* Contact */
+  .contact-grid{grid-template-columns:1fr;}
+  .cf-row{grid-template-columns:1fr;}
+  /* Ticker */
+  .ib{display:none;}
+  /* Nav */
+  nav{padding:.9rem 1.25rem;}
+  /* Footer */
+  .footer-grid{gap:2rem;}
+  /* Mission cards */
+  .m-cards{gap:.7rem;}
+  /* Testimonials */
+  .test-grid{grid-template-columns:1fr;}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:clamp(1.8rem,8vw,2.4rem);}
+  .hero-photo{height:80vw;}
+  .counter-grid{grid-template-columns:1fr 1fr;}
+  .spec-cards{grid-template-columns:1fr;}
+  .srv-grid{grid-template-columns:1fr;}
+  .ben-grid{grid-template-columns:1fr;}
+  section{padding:3.5rem 0;}
+  .creds-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="loader">
+  <div class="loader-logo">UAre<em>Well</em></div>
+  <div class="loader-bar"></div>
+  <div class="loader-pct" id="loader-pct">Loading…</div>
+</div>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<!-- PROGRESS -->
+<div id="pbar"></div>
+
+<!-- IDENTITY BAR -->
+<div class="ib">
+  <div class="ib-in">
+    <p class="ib-name">Susan Graf-Cote, LMFT</p>
+    <p class="ib-brand">UAreWell TheraCoach</p>
+    <p class="ib-tags">
+      Master Practitioner &amp; Trainer of NLP <span class="dot">✦</span>
+      Expert in PTSD &amp; Trauma <span class="dot">✦</span>
+      Addictions &amp; Recovery <span class="dot">✦</span>
+      Anxiety &amp; Depression
+    </p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">UAre<em>Well</em></a>
+  <ul class="nav-links">
+    <li><a href="#about" data-text="About">About</a></li>
+    <li><a href="#services" data-text="Services">Services</a></li>
+    <li><a href="#specialties" data-text="Specialties">Specialties</a></li>
+    <li><a href="#methods" data-text="Approach">Approach</a></li>
+    <li><a href="blog.html" data-text="Blog">Blog</a></li>
+    <li><a href="#contact" class="nav-cta"><span>Book a Session</span></a></li>
+  </ul>
+  <button class="hamburger" onclick="document.querySelector('.mob').classList.add('open')"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob">
+  <button class="mob-x" onclick="document.querySelector('.mob').classList.remove('open')">×</button>
+  <a href="#about"       onclick="document.querySelector('.mob').classList.remove('open')">About</a>
+  <a href="#services"    onclick="document.querySelector('.mob').classList.remove('open')">Services</a>
+  <a href="#specialties" onclick="document.querySelector('.mob').classList.remove('open')">Specialties</a>
+  <a href="#methods"     onclick="document.querySelector('.mob').classList.remove('open')">Approach</a>
+  <a href="blog.html"    onclick="document.querySelector('.mob').classList.remove('open')">Blog</a>
+  <a href="#contact"     onclick="document.querySelector('.mob').classList.remove('open')">Book a Session</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-text">
+    <p class="h-ey">Licensed Marriage &amp; Family Therapist</p>
+    <h1 class="hero-h1">
+      <span class="split-line"><span class="split-word" style="animation-delay:.6s">Begin&nbsp;</span><span class="split-word" style="animation-delay:.72s">Your</span></span>
+      <span class="split-line"><span class="split-word" style="animation-delay:.84s">Journey&nbsp;</span><span class="split-word" style="animation-delay:.96s">Toward</span></span>
+      <span class="split-line"><em><span class="split-word" style="animation-delay:1.08s">Healing</span></em><span class="split-word" style="animation-delay:1.18s">&nbsp;&amp;</span></span>
+      <span class="split-line"><span class="stroke split-word" style="animation-delay:1.28s">Freedom</span></span>
+    </h1>
+    <div class="hero-name-card">
+      <span class="hnc-name">Susan Graf-Cote, LMFT</span>
+      <span class="hnc-title">UAreWell TheraCoach &nbsp;·&nbsp; NLP Master Trainer &nbsp;·&nbsp; 30+ Years</span>
+    </div>
+    <p class="hero-sub">I believe in developing a powerful therapeutic relationship to empower you to become the solution. No labels. No giving up. Just real, lasting transformation.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-solid" data-magnetic>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span>Book a Free Discovery Call</span>
+      </a>
+      <a href="#services" class="btn btn-ghost" data-magnetic>
+        <span>Explore Services</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n"><span class="cu" data-t="30">0</span>+</div><div class="hstat-l">Years Experience</div></div>
+      <div class="hstat"><div class="hstat-n"><span class="cu" data-t="24">0</span>+</div><div class="hstat-l">Years Licensed</div></div>
+      <div class="hstat"><div class="hstat-n">∞</div><div class="hstat-l">Lives Transformed</div></div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="hp-blob"></div>
+    <div class="hp-lines"></div>
+    <div class="hp-ring"></div><div class="hp-ring2"></div>
+    <div class="photo-frame">
+      <div class="photo-inner" style="background:none;">
+        <img src="images/SusanHeader.avif" alt="Susan Graf-Cote, LMFT" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"/>
+        <div class="photo-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Susan Graf-Cote, LMFT
+        </div>
+      </div>
+    </div>
+    <div class="chip ch1"><span class="cd"></span>LMFT · Licensed Therapist</div>
+    <div class="chip ch2"><span class="cd"></span>NLP Master Trainer</div>
+    <div class="chip ch3"><span class="cd"></span>Reiki Master</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="t-track">
+    <span>NLP &amp; Coaching</span><span class="dot">✦</span><span>PTSD &amp; Trauma Healing</span><span class="dot">✦</span><span>Addiction &amp; Recovery</span><span class="dot">✦</span><span>Couples Therapy</span><span class="dot">✦</span><span>Reiki Healing</span><span class="dot">✦</span><span>Hypnosis</span><span class="dot">✦</span><span>Spiritual Awakening</span><span class="dot">✦</span><span>Breakthrough Coaching</span><span class="dot">✦</span><span>Timeline Therapy</span><span class="dot">✦</span><span>Anxiety &amp; Depression</span><span class="dot">✦</span>
+    <span>NLP &amp; Coaching</span><span class="dot">✦</span><span>PTSD &amp; Trauma Healing</span><span class="dot">✦</span><span>Addiction &amp; Recovery</span><span class="dot">✦</span><span>Couples Therapy</span><span class="dot">✦</span><span>Reiki Healing</span><span class="dot">✦</span><span>Hypnosis</span><span class="dot">✦</span><span>Spiritual Awakening</span><span class="dot">✦</span><span>Breakthrough Coaching</span><span class="dot">✦</span><span>Timeline Therapy</span><span class="dot">✦</span><span>Anxiety &amp; Depression</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="rv-l">
+        <div class="apc-wrap">
+          <div class="apc-ring"></div>
+          <div class="apc-frame" id="tilt-frame">
+            <div class="apc-inner" style="background:none;padding:0;">
+              <img src="images/SusanMain.avif" alt="Susan Graf-Cote, LMFT" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;"/>
+              <div class="apc-badge" style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);white-space:nowrap;z-index:2;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Susan Graf-Cote, LMFT
+              </div>
+            </div>
+          </div>
+          <div class="apc-dot"></div>
+        </div>
+        <div class="about-pull">
+          <blockquote>"I've been where you are now, so I will never give up on you. I have many tools to support you in creating the life you deserve and dream of."</blockquote>
+          <cite>— Susan Graf-Cote, LMFT</cite>
+        </div>
+      </div>
+      <div class="rv-r">
+        <p class="eyebrow">About Susan</p>
+        <h2 class="st">Passionate About <em>Inspiring</em> Others</h2>
+        <div class="bt">
+          <p>Hi, I'm Susan — a Master Practitioner and Trainer of NLP and Licensed Marriage and Family Therapist with over 23 years of practice. I specialize in PTSD, chemical dependency, trauma, and personality disorders, blending evidence-based therapy with spiritual wisdom.</p>
+          <p>I hold a master's certification in Reiki and teach people to connect with their higher selves through meditation and hypnosis. I am deeply familiar with manifestation, goal attainment, and guiding people to receive what they seek from the Universe.</p>
+          <p>My certification in Huna, expertise in NLP, Critical Debriefing, and Intervention enables me to meet clients exactly where they are — from teens 12+ to the most complex cases in correctional facilities.</p>
+          <p>I am high energy and stop at nothing to help others heal — it is my deepest passion.</p>
+        </div>
+        <div class="creds-grid">
+          <div class="ci rv rv1">Masters in Counseling Psychology</div>
+          <div class="ci rv rv2">BA in Psychology</div>
+          <div class="ci rv rv3">Licensed LMFT</div>
+          <div class="ci rv rv4">Minor in Chemical Dependency</div>
+          <div class="ci rv rv1">NLP Master &amp; Trainer</div>
+          <div class="ci rv rv2">Reiki Master Certification</div>
+          <div class="ci rv rv3">Certified in Huna Technique</div>
+          <div class="ci rv rv4">Intervention Certification</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="mission-grid-pat"></div>
+  <div class="container">
+    <div class="mission-layout">
+      <div class="rv-l">
+        <p class="eyebrow" style="color:var(--clay);">My Mission</p>
+        <h2 class="st lt">A Unique Plan <em>Built</em><br>for You</h2>
+        <p class="bt" style="margin-bottom:1.4rem;">I introduce you to a multitude of theoretical approaches. I won't tell you to "just let go" — I'm going to <em style="color:var(--clay-lt);">teach</em> you how. If it were that easy, therapists would be out of work.</p>
+        <p class="bt">Part of my strategy is a unique plan with check-in milestones. If something isn't working, we approach from a different angle.</p>
+      </div>
+      <div class="m-cards rv-r">
+        <div class="mc">
+          <div class="mc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div><h4>Personalized Strategy</h4><p>Every client receives a fully custom plan tailored to their unique story — no templates.</p></div>
+        </div>
+        <div class="mc">
+          <div class="mc-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div><h4>Root-Level Healing</h4><p>The 3R-BE Method™ targets deeper programming, not just surface-level symptoms.</p></div>
+        </div>
+        <div class="mc">
+          <div class="mc-ico"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+          <div><h4>Adaptive Approach</h4><p>If one technique isn't clicking, we pivot immediately until we find what truly works.</p></div>
+        </div>
+        <div class="mc">
+          <div class="mc-ico"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div><h4>Your Empowerment</h4><p>My goal: you become your own guiding force — confident, free, and fully alive.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTER STRIP -->
+<div class="counter-strip">
+  <div class="container">
+    <div class="counter-grid">
+      <div class="c-item rv rv1"><span class="c-n"><span class="cu" data-t="30">0</span>+</span><span class="c-l">Years in Practice</span></div>
+      <div class="c-item rv rv2"><span class="c-n"><span class="cu" data-t="500">0</span>+</span><span class="c-l">Clients Served</span></div>
+      <div class="c-item rv rv3"><span class="c-n"><span class="cu" data-t="8">0</span></span><span class="c-l">Certifications</span></div>
+      <div class="c-item rv rv4"><span class="c-n"><span class="cu" data-t="6">0</span></span><span class="c-l">Modalities Mastered</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="srv-hdr rv">
+      <p class="eyebrow c">Services</p>
+      <h2 class="st" style="text-align:center;">How I Can <em>Help</em> You</h2>
+      <p class="bt" style="text-align:center;max-width:500px;margin:0 auto;">Three transformational pathways — all available online worldwide.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="scard rv rv1">
+        <div class="sc-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="scard-tag">3-Month VIP Program</div>
+        <h3>Unleash Your Fire Coaching</h3>
+        <p>Weekly laser-focused 1-on-1 sessions plus 15–20 weekly reframe calls. Cutting-edge tools and your Quantum Leap Breakthrough Session to accelerate recovery, career, and love.</p>
+        <a href="#contact" class="btn btn-solid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Start Now</span></a>
+      </div>
+      <div class="scard dark rv rv2">
+        <div class="sc-ico"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="scard-tag">Signature Session</div>
+        <h3>Quantum Leap Breakthrough</h3>
+        <p>Create long-lasting personal empowerment faster than any traditional method. Release past anger, fear, guilt, and limiting beliefs. Set a powerful 10-year vision and build an immediate action plan.</p>
+        <a href="#contact" class="btn btn-solid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Start Now</span></a>
+      </div>
+      <div class="scard rv rv3">
+        <div class="sc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="scard-tag">2-Hour Intensive</div>
+        <h3>Shift Your Being State</h3>
+        <p>Know the problem but can't find the solution? This laser-focused session delivers clarity, accountability, and a winning edge — perfect for executives, entrepreneurs, and anyone at a crossroads.</p>
+        <a href="#contact" class="btn btn-solid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Start Now</span></a>
+      </div>
+    </div>
+    <div class="sw rv">
+      <div class="sw-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <div>
+        <div class="scard-tag">Licensed Therapy</div>
+        <h3>Psychotherapy</h3>
+        <p class="bt" style="font-size:.86rem;">A safe, confidential space integrating CBT, family systems theory, ego psychology, and transactional analysis to address depression, anxiety, PTSD, addiction, relationships, and more.</p>
+      </div>
+      <a href="#contact" class="btn btn-solid" style="white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Start Now</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section id="specialties">
+  <div class="container">
+    <div class="spec-layout">
+      <div class="rv-l">
+        <p class="eyebrow">Areas of Expertise</p>
+        <h2 class="st">Over 24 Years of <em>Experience</em></h2>
+        <p class="bt">I work across a wide spectrum, blending multiple evidence-based and holistic techniques — because no two people are exactly alike.</p>
+        <div class="pill-cloud">
+          <span class="pill"><span>Post Traumatic Stress Disorder</span></span><span class="pill"><span>Phobias &amp; Anxiety</span></span><span class="pill"><span>Depression</span></span><span class="pill"><span>Couples &amp; Family Counseling</span></span><span class="pill"><span>Grief Counseling</span></span><span class="pill"><span>Addiction &amp; Recovery</span></span><span class="pill"><span>Conflict Resolution</span></span><span class="pill"><span>Timeline Therapy</span></span><span class="pill"><span>Relationship Coaching</span></span><span class="pill"><span>Hypnosis</span></span><span class="pill"><span>Neuro Repatterning</span></span><span class="pill"><span>Behavioral Modification</span></span><span class="pill"><span>Spiritual Awakening</span></span><span class="pill"><span>Work &amp; Career Coaching</span></span><span class="pill"><span>Codependency</span></span><span class="pill"><span>Stress Management</span></span><span class="pill"><span>Personality Disorders</span></span><span class="pill"><span>Parenting Support</span></span><span class="pill"><span>Blended Families</span></span><span class="pill"><span>Bipolar Disorder</span></span>
+        </div>
+      </div>
+      <div class="rv-r" style="display:flex;align-items:center;justify-content:center;">
+        <div class="bubbles">
+          <div class="bub b1">Mind · Body<br>Spirit</div>
+          <div class="bub b2">Heal<br>Trauma</div>
+          <div class="bub b3">Unlock<br>Purpose</div>
+          <div class="bub b4">Inner<br>Freedom</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="container">
+    <div class="rv" style="max-width:600px;">
+      <p class="eyebrow">Why It Works</p>
+      <h2 class="st lt">The Benefits of Therapy <em>&amp;</em> Coaching</h2>
+      <p class="bt" style="color:rgba(245,240,232,.52);">NLP and coaching focus on the neurological processes that reprogram both the conscious and unconscious mind — creating transformation that sticks.</p>
+    </div>
+    <div class="ben-grid">
+      <div class="bi rv rv1"><div class="bi-ico"><svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg></div><h4>Reprogram the Mind</h4><p>Transform limiting beliefs using advanced hypnotic language techniques at the unconscious level.</p></div>
+      <div class="bi rv rv2"><div class="bi-ico"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h4>Rapid Transformation</h4><p>The 3R-BE Method™ creates faster, deeper change by targeting root-level programming.</p></div>
+      <div class="bi rv rv3"><div class="bi-ico"><svg viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg></div><h4>Mind · Body · Spirit</h4><p>Tools addressing the full interconnectedness of your mind, body, spirit, and emotions.</p></div>
+      <div class="bi rv rv4"><div class="bi-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div><h4>Tangible Results</h4><p>Develop genuine confidence to navigate life's challenges and emerge as your own guide.</p></div>
+      <div class="bi rv rv1"><div class="bi-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h4>Lasting Accountability</h4><p>Action-oriented assignments and milestones keep you moving forward without excuses.</p></div>
+      <div class="bi rv rv2"><div class="bi-ico"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h4>Manifest Your Dreams</h4><p>Learn how the law of attraction works to consciously create more money, love, and joy.</p></div>
+      <div class="bi rv rv3"><div class="bi-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h4>Emotional Freedom</h4><p>Release past anger, sadness, fears and guilt — forgive for true, lasting peace of mind.</p></div>
+      <div class="bi rv rv4"><div class="bi-ico"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h4>Break Self-Sabotage</h4><p>Dismantle patterns keeping you stuck and replace them with empowering strategies.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODS -->
+<section id="methods">
+  <div class="container">
+    <div class="meth-layout">
+      <div class="rv-l">
+        <p class="eyebrow">My Approach</p>
+        <h2 class="st">Blending Science <em>&amp;</em> Soul</h2>
+        <p class="bt">After 30+ years I have built a rich toolkit — drawing from the best of clinical psychology and ancient wisdom to meet each person exactly where they are.</p>
+        <div class="meth-list">
+          <div class="mi"><div class="mi-b"><svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg></div><div><h4>Neuro-Linguistic Programming</h4><p>Reframe patterns, dismantle limiting beliefs, and install empowering behaviors at the unconscious level.</p></div></div>
+          <div class="mi"><div class="mi-b"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div><h4>Cognitive Behavioral Therapy</h4><p>Evidence-based techniques to shift thought patterns driving anxiety, depression, and mental health challenges.</p></div></div>
+          <div class="mi"><div class="mi-b"><svg viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg></div><div><h4>Huna &amp; Reiki</h4><p>Ancient Hawaiian healing and Reiki energy work to restore balance across mind, body and spirit.</p></div></div>
+          <div class="mi"><div class="mi-b"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><h4>Hypnosis &amp; Meditation</h4><p>Access deeper states to connect with higher guidance, release trauma, and cultivate lasting inner peace.</p></div></div>
+          <div class="mi"><div class="mi-b"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div><div><h4>Timeline Therapy</h4><p>Journey through your personal timeline to release stored emotional charge and align with your highest self.</p></div></div>
+          <div class="mi"><div class="mi-b"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><h4>3R-BE Method™</h4><p>Susan's signature proven tool creating rapid transformation by targeting the root cause in the unconscious.</p></div></div>
+        </div>
+      </div>
+      <div class="meth-aside rv-r">
+        <div class="meth-photo rv rv1">
+          <img src="images/SusanMain2.avif" alt="Susan Graf-Cote in session" style="width:100%;height:280px;object-fit:cover;object-position:center top;display:block;border-radius:2px;box-shadow:0 24px 60px rgba(30,26,22,.22);"/>
+          <div style="height:3px;background:linear-gradient(90deg,var(--clay-dk),var(--clay),var(--gold));border-radius:0 0 2px 2px;"></div>
+        </div>
+        <div class="mq">
+          <blockquote>"I am able to blend multiple techniques because of my long-term experience. I go above and beyond for everyone who chooses to work with me."</blockquote>
+          <cite>— Susan Graf-Cote, LMFT, NLP Master Trainer</cite>
+        </div>
+        <div class="also-box">
+          <p class="eyebrow">Also Available For</p>
+          <div class="also-pills">
+            <span class="pill"><span>Teens 12+</span></span><span class="pill"><span>Couples</span></span><span class="pill"><span>Families</span></span><span class="pill"><span>Blended Families</span></span><span class="pill"><span>Parenting Support</span></span><span class="pill"><span>Court Navigation</span></span><span class="pill"><span>Online Sessions</span></span><span class="pill"><span>Critical Debriefing</span></span><span class="pill"><span>Intervention</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="rv" style="text-align:center;margin-bottom:3.2rem;">
+      <p class="eyebrow c">Testimonials</p>
+      <h2 class="st" style="text-align:center;">Voices of <em>Transformation</em></h2>
+    </div>
+    <div class="test-grid">
+      <div class="tc rv rv1">
+        <div class="tc-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"Susan helped me finally understand the root of my anxiety after years of struggling. Her NLP techniques were unlike anything I'd tried before — real, lasting change."</blockquote>
+        <cite>— Client, San Diego CA</cite>
+      </div>
+      <div class="tc rv rv2">
+        <div class="tc-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"My husband and I came to Susan in crisis. She brought wisdom, compassion, and tools that completely transformed our communication. We're in a totally different place now."</blockquote>
+        <cite>— Couples Counseling Client</cite>
+      </div>
+      <div class="tc rv rv3">
+        <div class="tc-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"The Quantum Leap session was genuinely life-changing. I released decades of guilt in a single session. Susan is the most gifted practitioner I have ever worked with."</blockquote>
+        <cite>— VIP Coaching Client</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section id="blog-prev">
+  <div class="container">
+    <div class="rv" style="text-align:center;margin-bottom:1rem;">
+      <p class="eyebrow c">From the Blog</p>
+      <h2 class="st" style="text-align:center;">Insights &amp; <em>Healing</em></h2>
+      <p class="bt" style="text-align:center;max-width:480px;margin:0 auto;">Practical wisdom, tools, and reflections to support your journey between sessions.</p>
+    </div>
+    <div class="blog-grid">
+      <div class="bcard rv rv1">
+        <div class="bcard-img" style="background:linear-gradient(135deg,var(--sage-lt),var(--cream));"><div class="bcard-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg></div></div>
+        <div class="bcard-body"><p class="bcard-cat">NLP &amp; Mindset</p><h3>How NLP Reprograms Your Unconscious Mind</h3><p>The science behind why it creates faster, deeper change than traditional therapy.</p><a href="blog.html" class="rd-link">Read More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+      <div class="bcard rv rv2">
+        <div class="bcard-img" style="background:linear-gradient(135deg,var(--clay-lt),var(--gold-lt));"><div class="bcard-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="var(--clay)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div></div>
+        <div class="bcard-body"><p class="bcard-cat">Trauma &amp; Healing</p><h3>5 Signs Your Nervous System is Holding Trauma</h3><p>PTSD doesn't always look like flashbacks. Learn the subtle signals your body sends.</p><a href="blog.html" class="rd-link">Read More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+      <div class="bcard rv rv3">
+        <div class="bcard-img" style="background:linear-gradient(135deg,var(--gold-lt),var(--cream));"><div class="bcard-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
+        <div class="bcard-body"><p class="bcard-cat">Relationships</p><h3>Why We Pick Who We Pick: The Science of Attraction</h3><p>Unpacking the unconscious patterns that drive who we choose in love.</p><a href="blog.html" class="rd-link">Read More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+    </div>
+    <div class="blog-cta rv"><a href="blog.html" class="btn btn-ghost"><span>View All Articles</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="rv-l" style="padding-top:2rem;">
+        <p class="eyebrow">Get In Touch</p>
+        <h2 class="st">Ready to <em>Begin?</em></h2>
+        <p class="bt" style="margin-bottom:2.5rem;">You deserve a life of fulfillment, joy, and freedom. Take the first step — reach out and let's talk about how I can support your journey.</p>
+        <div class="ci-it"><div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><h5>Location</h5><p>2856 Ariane Drive, San Diego, CA 92117</p></div></div>
+        <div class="ci-it"><div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.89a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div><div><h5>Phone</h5><a href="tel:8584140411">858-414-0411</a></div></div>
+        <div class="ci-it"><div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><h5>Email</h5><a href="mailto:urwellsandiego@gmail.com">urwellsandiego@gmail.com</a></div></div>
+        <div class="ci-it"><div class="ci-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div><h5>Sessions</h5><p>Available Online Worldwide</p></div></div>
+      </div>
+      <div class="cform rv-r">
+        <h3>Book a Free Discovery Call</h3>
+        <div class="frow"><div class="fg"><label>First Name</label><input type="text" placeholder="Your first name"/></div><div class="fg"><label>Last Name</label><input type="text" placeholder="Your last name"/></div></div>
+        <div class="fg"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
+        <div class="fg"><label>Phone Number</label><input type="tel" placeholder="(000) 000-0000"/></div>
+        <div class="fg"><label>I'm Interested In</label><select><option value="">Select a service…</option><option>Unleash Your Fire VIP Coaching</option><option>Quantum Leap Breakthrough Session</option><option>Shift Your Being State (2-Hour)</option><option>Psychotherapy</option><option>Couples Counseling</option><option>General Inquiry</option></select></div>
+        <div class="fg"><label>What's Bringing You Here?</label><textarea placeholder="Share as much or as little as you're comfortable with…"></textarea></div>
+        <button class="btn btn-solid" style="width:100%;justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span>Send My Message</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="fb"><a href="index.html" class="nav-logo">UAre<em>Well</em></a><p class="fb-name">Susan Graf-Cote, LMFT</p><p>Empowering individuals, couples, and families to heal, grow, and live lives they truly deserve. San Diego, CA. Available online worldwide.</p></div>
+      <div class="fc"><h5>Services</h5><a href="#services">VIP Coaching Program</a><a href="#services">Quantum Leap Session</a><a href="#services">Shift Your Being State</a><a href="#services">Psychotherapy</a><a href="blog.html">Blog</a></div>
+      <div class="fc"><h5>Contact</h5><p>2856 Ariane Drive<br>San Diego, CA 92117</p><a href="tel:8584140411">858-414-0411</a><a href="mailto:urwellsandiego@gmail.com">urwellsandiego@gmail.com</a></div>
+    </div>
+    <div class="footer-bot"><p>© 2025 UAreWell TheraCoach · Susan Graf-Cote, LMFT · San Diego, CA</p><p>LMFT · NLP Master Practitioner &amp; Trainer · Reiki Master</p><a href="admin.html" style="font-size:.62rem;color:rgba(245,240,232,.18);text-decoration:none;letter-spacing:.1em;transition:color .2s;" onmouseover="this.style.color='var(--clay)'" onmouseout="this.style.color='rgba(245,240,232,.18)'">Admin</a></div>
+  </div>
+</footer>
+
+<script>
+/* ─── LOADER ─── */
+window.addEventListener('load',()=>{
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*15+5;
+    if(p>=100){p=100;clearInterval(iv);setTimeout(()=>document.getElementById('loader').classList.add('done'),300);}
+    document.getElementById('loader-pct').textContent=Math.floor(p)+'%';
+  },80);
+});
+
+/* ─── CURSOR ─── */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0,cursorReady=false;
+// Only activate cursor on real pointer devices
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    if(!cursorReady){cursorReady=true;document.body.classList.add('cursor-active');}
+  });
+  (function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+  document.querySelectorAll('a,button,.scard,.tc,.bi,.mc').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cur-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-hover'));
+  });
+  document.addEventListener('mousedown',()=>document.body.classList.add('cur-click'));
+  document.addEventListener('mouseup',()=>document.body.classList.remove('cur-click'));
+}
+
+/* ─── PROGRESS BAR ─── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('pbar').style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+
+/* ─── HERO PARTICLE CANVAS ─── */
+(()=>{
+  const cv=document.getElementById('hero-canvas');
+  if(!cv)return;
+  const c=cv.getContext('2d');
+  let W,H;
+  const resize=()=>{W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;};
+  resize();window.addEventListener('resize',resize);
+  const pts=Array.from({length:50},()=>({x:Math.random()*100,y:Math.random()*100,vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15,r:Math.random()*1.5+.5,o:Math.random()*.3+.08}));
+  (function draw(){
+    c.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      c.beginPath();c.arc(p.x/100*W,p.y/100*H,p.r,0,Math.PI*2);
+      c.fillStyle=`rgba(181,113,79,${p.o})`;c.fill();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>100)p.vx*=-1;
+      if(p.y<0||p.y>100)p.vy*=-1;
+    });
+    // draw delicate connections
+    pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{
+      const dx=(a.x-b.x)/100*W,dy=(a.y-b.y)/100*H,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<80){c.beginPath();c.moveTo(a.x/100*W,a.y/100*H);c.lineTo(b.x/100*W,b.y/100*H);c.strokeStyle=`rgba(181,113,79,${.08*(1-d/80)})`;c.lineWidth=.5;c.stroke();}
+    }));
+    requestAnimationFrame(draw);
+  })();
+})();
+
+/* ─── SCROLL REVEAL ─── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:.1});
+document.querySelectorAll('.rv,.rv-l,.rv-r,.rv-s,.rv1,.rv2,.rv3,.rv4,.rv5,.rv-l1,.rv-l2,.rv-r1,.rv-r2,.rv-r3,.rv-l3,.rv-l4,.rv-r4').forEach(el=>obs.observe(el));
+
+/* ─── COUNT UP ─── */
+const cuObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,target=+el.dataset.t,dur=1600;
+    let start=null;
+    (function step(ts){if(!start)start=ts;const p=Math.min((ts-start)/dur,1);el.textContent=Math.floor(p*target);if(p<1)requestAnimationFrame(step);})(performance.now());
+    cuObs.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('.cu').forEach(el=>cuObs.observe(el));
+
+/* ─── MAGNETIC BUTTONS ─── */
+document.querySelectorAll('[data-magnetic]').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*.25;
+    const y=(e.clientY-r.top-r.height/2)*.25;
+    btn.style.transform=`translate(${x}px,${y}px)`;
+  });
+  btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+});
+
+/* ─── RIPPLE ON BUTTON CLICK ─── */
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    const r=btn.getBoundingClientRect();
+    const rip=document.createElement('span');
+    rip.className='ripple';
+    const size=Math.max(r.width,r.height);
+    rip.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-r.left-size/2}px;top:${e.clientY-r.top-size/2}px;`;
+    btn.appendChild(rip);
+    setTimeout(()=>rip.remove(),600);
+  });
+});
+
+/* ─── 3D TILT on about photo ─── */
+const tf=document.getElementById('tilt-frame');
+if(tf){
+  tf.addEventListener('mousemove',e=>{
+    const r=tf.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width-.5)*12;
+    const y=((e.clientY-r.top)/r.height-.5)*-12;
+    tf.style.transform=`perspective(800px) rotateY(${x}deg) rotateX(${y}deg) scale(1.02)`;
+    tf.style.transition='transform .05s';
+  });
+  tf.addEventListener('mouseleave',()=>{tf.style.transform='';tf.style.transition='transform .5s ease';});
+}
+
+/* ─── TEXT SCRAMBLE on h2 hover ─── */
+const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%';
+document.querySelectorAll('h2.st em').forEach(el=>{
+  const orig=el.textContent;
+  el.addEventListener('mouseenter',()=>{
+    let iter=0;
+    clearInterval(el._iv);
+    el._iv=setInterval(()=>{
+      el.textContent=orig.split('').map((ch,i)=>i<iter?ch:chars[Math.floor(Math.random()*chars.length)]).join('');
+      if(iter>=orig.length){clearInterval(el._iv);el.textContent=orig;}
+      iter+=.6;
+    },30);
+  });
+});
+
+/* ─── PARALLAX on scroll ─── */
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  document.querySelectorAll('.hp-blob,.hp-ring,.hp-ring2').forEach(el=>el.style.transform=`translateY(${y*.08}px)`);
+  document.querySelectorAll('.apc-dot').forEach(el=>el.style.transform=`translateY(${y*.04}px)`);
+});
+</script>
+
+
+<!-- ═══════════════════════════════════════════════
+     UAreWell TheraCoach — AI Chat Widget
+     Self-contained. No external CDN. Safe to append
+     before </body> in both index.html & blog.html
+═══════════════════════════════════════════════ -->
+
+<!-- CHAT WIDGET STYLES -->
+<style>
+/* ── Widget Z-layer sits above nav (990) but below loader (99999) ── */
+#tc-chat-root{--tc-clay:#B5714F;--tc-clay-dk:#8C4F32;--tc-clay-lt:#E8C9B8;--tc-sage:#6B9B7E;--tc-cream:#F5F0E8;--tc-ivory:#FBF8F3;--tc-charcoal:#1E1A16;--tc-mid:#6B5A50;--tc-gold:#C49A5A;--tc-gold-lt:#E8D5A8;--tc-w:360px;--tc-h:460px;font-family:'Jost',sans-serif;position:fixed;bottom:5rem;right:2rem;z-index:9000;}
+
+/* ── FAB TRIGGER BUTTON ── */
+#tc-fab{width:62px;height:62px;border-radius:50%;background:var(--tc-charcoal);border:none;box-shadow:0 6px 28px rgba(181,113,79,.55),0 2px 8px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,background .25s;position:relative;overflow:hidden;z-index:2;}
+#tc-fab::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 38% 38%,rgba(196,154,90,.18),transparent 65%),radial-gradient(circle at 72% 68%,rgba(181,113,79,.14),transparent 55%);pointer-events:none;}
+#tc-fab:hover{transform:scale(1.08);box-shadow:0 10px 36px rgba(181,113,79,.65),0 3px 12px rgba(0,0,0,.22);}
+#tc-fab:active{transform:scale(.95);}
+/* AI avatar inside FAB */
+#tc-fab-av{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .28s,transform .32s cubic-bezier(.34,1.56,.64,1);}
+#tc-chat-root.open #tc-fab-av{opacity:0;transform:scale(.55) rotate(90deg);}
+/* X close icon */
+#tc-fab .ico-x{position:absolute;stroke:rgba(255,255,255,.85);fill:none;stroke-width:2.2;stroke-linecap:round;opacity:0;transform:rotate(-90deg) scale(.55);transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .24s;}
+#tc-chat-root.open #tc-fab .ico-x{opacity:1;transform:rotate(0deg) scale(1);}
+/* Pulse ring on FAB */
+#tc-fab::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:2px solid rgba(181,113,79,.32);animation:tcPulse 2.5s ease-in-out infinite;pointer-events:none;}
+#tc-chat-root.open #tc-fab::before{animation:none;opacity:0;}
+@keyframes tcPulse{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.18);opacity:.15;}}
+/* Notification dot */
+#tc-fab-dot{position:absolute;top:2px;right:2px;width:13px;height:13px;border-radius:50%;background:var(--tc-sage);border:2.5px solid var(--tc-ivory);font-size:.48rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;animation:tcBounce .5s .8s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes tcBounce{from{opacity:0;transform:scale(0);}to{opacity:1;transform:scale(1);}}
+#tc-chat-root.open #tc-fab-dot{display:none;}
+
+/* ── CHAT WINDOW ── */
+#tc-win{position:absolute;bottom:72px;right:0;width:var(--tc-w);height:var(--tc-h);max-height:calc(100vh - 11rem);background:var(--tc-ivory);border-radius:4px 4px 0 0;box-shadow:0 24px 80px rgba(30,26,22,.22),0 8px 32px rgba(30,26,22,.14),0 0 0 1px rgba(181,113,79,.12);display:flex;flex-direction:column;transform:scale(.85) translateY(24px);transform-origin:bottom right;opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s ease;overflow:hidden;}
+#tc-chat-root.open #tc-win{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+
+/* Window Header */
+#tc-hdr{background:var(--tc-charcoal);padding:1.1rem 1.25rem .9rem;flex-shrink:0;position:relative;overflow:hidden;}
+#tc-hdr::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(181,113,79,.12),transparent 60%);pointer-events:none;}
+#tc-hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(181,113,79,.5),transparent);}
+.tc-hdr-row{display:flex;align-items:center;gap:.75rem;position:relative;z-index:1;}
+.tc-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(140deg,var(--tc-clay-lt),var(--tc-clay));flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid rgba(181,113,79,.35);}
+.tc-avatar svg{width:18px;height:18px;fill:none;stroke:rgba(255,255,255,.9);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.tc-hdr-info{flex:1;}
+.tc-hdr-name{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:500;color:#fff;letter-spacing:.02em;line-height:1.2;}
+.tc-hdr-name em{color:var(--tc-clay);font-style:italic;}
+.tc-hdr-sub{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-top:.18rem;display:flex;align-items:center;gap:.4rem;}
+.tc-online{width:6px;height:6px;border-radius:50%;background:#6FCF97;box-shadow:0 0 6px rgba(111,207,151,.6);animation:tcOnlinePulse 2s ease-in-out infinite;}
+@keyframes tcOnlinePulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+.tc-hdr-right{display:flex;gap:.4rem;}
+.tc-hdr-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:2px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.tc-hdr-btn:hover{background:rgba(255,255,255,.14);}
+.tc-hdr-btn svg{width:13px;height:13px;stroke:rgba(255,255,255,.55);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Tagline strip below header */
+#tc-tagline{background:rgba(181,113,79,.12);border-bottom:1px solid rgba(181,113,79,.15);padding:.42rem 1.25rem;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tc-clay);text-align:center;flex-shrink:0;}
+
+/* Messages area */
+#tc-msgs{flex:1;overflow-y:auto;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.6rem;scroll-behavior:smooth;}
+#tc-msgs::-webkit-scrollbar{width:4px;}
+#tc-msgs::-webkit-scrollbar-track{background:transparent;}
+#tc-msgs::-webkit-scrollbar-thumb{background:rgba(181,113,79,.2);border-radius:10px;}
+
+/* Message bubbles */
+.tc-msg{max-width:84%;display:flex;flex-direction:column;gap:.2rem;animation:tcMsgIn .3s cubic-bezier(.16,1,.3,1) both;}
+@keyframes tcMsgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.tc-msg.bot{align-self:flex-start;}
+.tc-msg.user{align-self:flex-end;}
+.tc-bubble{padding:.65rem .95rem;border-radius:2px;font-size:.83rem;line-height:1.65;position:relative;}
+.tc-msg.bot .tc-bubble{background:var(--tc-cream);border:1px solid rgba(181,113,79,.14);color:var(--tc-charcoal);border-radius:0 8px 8px 8px;}
+.tc-msg.user .tc-bubble{background:var(--tc-clay);color:#fff;border-radius:8px 0 8px 8px;}
+.tc-msg.user .tc-bubble strong{color:var(--tc-gold-lt);}
+.tc-time{font-size:.58rem;letter-spacing:.06em;color:var(--tc-mid);opacity:.55;padding:0 .35rem;}
+.tc-msg.user .tc-time{text-align:right;}
+/* Bot name label */
+.tc-bot-label{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tc-clay);margin-bottom:.08rem;padding-left:.15rem;}
+
+/* Typing indicator */
+.tc-typing{display:flex;gap:.3rem;align-items:center;padding:.62rem .95rem;background:var(--tc-cream);border:1px solid rgba(181,113,79,.14);border-radius:0 8px 8px 8px;width:fit-content;}
+.tc-dot{width:6px;height:6px;border-radius:50%;background:var(--tc-clay);opacity:.4;animation:tcTypeDot 1.2s ease-in-out infinite;}
+.tc-dot:nth-child(2){animation-delay:.2s;}
+.tc-dot:nth-child(3){animation-delay:.4s;}
+@keyframes tcTypeDot{0%,60%,100%{opacity:.25;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
+
+/* Quick reply chips */
+#tc-qr{padding:.5rem 1rem .3rem;display:flex;gap:.4rem;flex-wrap:wrap;flex-shrink:0;border-top:1px solid rgba(181,113,79,.08);}
+.tc-qr-chip{background:transparent;border:1px solid rgba(181,113,79,.28);border-radius:50px;padding:.3rem .8rem;font-family:'Jost',sans-serif;font-size:.72rem;color:var(--tc-clay);transition:all .2s;white-space:nowrap;overflow:hidden;position:relative;}
+.tc-qr-chip::before{content:'';position:absolute;inset:0;background:var(--tc-clay);transform:scale(0);border-radius:50px;transition:transform .25s;z-index:0;}
+.tc-qr-chip:hover,.tc-qr-chip:focus{color:#fff;border-color:var(--tc-clay);}
+.tc-qr-chip:hover::before{transform:scale(1);}
+.tc-qr-chip span{position:relative;z-index:1;}
+
+/* Input area */
+#tc-input-row{display:flex;gap:.5rem;padding:.75rem 1rem .9rem;border-top:1px solid rgba(181,113,79,.12);flex-shrink:0;background:var(--tc-ivory);}
+#tc-input{flex:1;background:var(--tc-cream);border:1px solid rgba(181,113,79,.2);border-radius:2px;padding:.6rem .85rem;font-family:'Jost',sans-serif;font-size:.84rem;color:var(--tc-charcoal);outline:none;resize:none;transition:border-color .25s,box-shadow .25s;height:40px;max-height:100px;overflow-y:auto;line-height:1.45;}
+#tc-input:focus{border-color:var(--tc-clay);box-shadow:0 0 0 3px rgba(181,113,79,.1);}
+#tc-input::placeholder{color:var(--tc-mid);opacity:.55;font-size:.82rem;}
+#tc-send{width:40px;height:40px;border-radius:2px;background:var(--tc-clay);border:none;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s,box-shadow .2s;flex-shrink:0;}
+#tc-send:hover{background:var(--tc-clay-dk);transform:scale(1.05);box-shadow:0 4px 14px rgba(181,113,79,.4);}
+#tc-send:active{transform:scale(.95);}
+#tc-send svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Footer disclaimer */
+#tc-footer{padding:.4rem 1rem .45rem;text-align:center;font-size:.58rem;color:var(--tc-mid);opacity:.45;letter-spacing:.06em;flex-shrink:0;border-top:1px solid rgba(181,113,79,.06);}
+#tc-footer a{color:var(--tc-clay);text-decoration:none;opacity:.7;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  #tc-chat-root{bottom:4rem;right:1rem;--tc-w:calc(100vw - 2rem);}
+  #tc-win{right:0;bottom:68px;max-height:calc(100vh - 9rem);}
+}
+/* Override site's cursor:none on our widget buttons */
+#tc-chat-root button{cursor:pointer !important;}
+</style>
+
+<!-- CHAT WIDGET HTML -->
+<div id="tc-chat-root">
+  <!-- Chat Window -->
+  <div id="tc-win" role="dialog" aria-label="Chat with UAreWell TheraCoach" aria-modal="true">
+    <!-- Header -->
+    <div id="tc-hdr">
+      <div class="tc-hdr-row">
+        <div class="tc-avatar" style="background:var(--tc-charcoal);border-color:rgba(196,154,90,.4);">
+          <span style="font-family:'Playfair Display',Georgia,serif;font-size:.72rem;font-weight:700;letter-spacing:.08em;color:#C49A5A;">AI</span>
+        </div>
+        <div class="tc-hdr-info">
+          <div class="tc-hdr-name">UAre<em>Well</em> TheraCoach</div>
+          <div class="tc-hdr-sub"><span class="tc-online"></span>Susan's Practice Assistant</div>
+        </div>
+        <div class="tc-hdr-right">
+          <button class="tc-hdr-btn" aria-label="Minimize chat" onclick="tcToggle()">
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="tc-tagline">Licensed Therapist · NLP Master · 30+ Years</div>
+
+    <!-- Messages -->
+    <div id="tc-msgs" role="log" aria-live="polite" aria-label="Chat messages"></div>
+
+    <!-- Quick Replies -->
+    <div id="tc-qr" role="group" aria-label="Quick reply options"></div>
+
+    <!-- Input -->
+    <div id="tc-input-row">
+      <textarea id="tc-input" placeholder="Ask about services, booking…" rows="1" aria-label="Type your message"></textarea>
+      <button id="tc-send" aria-label="Send message">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div id="tc-footer">Powered by UAreWell AI · <a href="#contact">Book a real session</a></div>
+  </div>
+
+  <!-- FAB Button -->
+  <button id="tc-fab" aria-label="Open chat assistant" aria-expanded="false" onclick="tcToggle()">
+    <div id="tc-fab-dot">1</div>
+    <!-- AI text avatar -->
+    <div id="tc-fab-av">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="19" y="25" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="15" font-weight="700" letter-spacing="1" fill="#C49A5A">AI</text>
+        <circle cx="19" cy="19" r="17.5" stroke="#C49A5A" stroke-width="1.2" opacity="0.5"/>
+      </svg>
+    </div>
+    <!-- X close icon -->
+    <svg viewBox="0 0 24 24" class="ico-x" width="22" height="22">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<!-- CHAT WIDGET SCRIPT -->
+<script>
+(function(){
+'use strict';
+
+/* ── CONFIG ── */
+const BOT_NAME   = 'TheraCoach AI';
+const API_URL    = '/chat';
+// Human-feeling typing delay: short for fast replies, scales with response length
+const MIN_DELAY  = 600;
+const MS_PER_CHAR = 18; // ~55 wpm "reading" feel
+
+/* ── RICH QUICK REPLIES per context ── */
+const QR = {
+  greet:    ['What services do you offer?','Who is Susan?','How do I get started?','Do you offer online sessions?'],
+  services: ['Tell me about the Quantum Leap session','What is the VIP coaching program?','Book a free discovery call','Online sessions available?'],
+  nlp:      ['What is Timeline Therapy?','How is NLP different from regular therapy?','Book a session with Susan'],
+  trauma:   ['How does Susan approach trauma?','What is PTSD treatment like?','Book a free discovery call'],
+  book:     ['Call 858-414-0411','Email Susan','What should I expect on a discovery call?','Tell me about services'],
+  addiction:['How does Susan treat addiction?','What is the recovery process?','Book a free discovery call'],
+  anxiety:  ['How does NLP help anxiety?','Tell me about services','Book a free call'],
+  teens:    ['Does Susan work with parents too?','What age groups?','Book a discovery call'],
+  default:  ['Book a free discovery call','What services do you offer?','About Susan','NLP & mindset'],
+};
+
+function pickQR(text) {
+  const t = (text||'').toLowerCase();
+  if (/book|schedul|appoint|contact|call|start|begin|price|cost|fee|how.*get.start|first.step/.test(t)) return QR.book;
+  if (/nlp|neuro|linguistic|unconscious|belief|pattern|reprogram|3r-be|quantum leap/.test(t)) return QR.nlp;
+  if (/trauma|ptsd|abuse|flashback|nervous|wound|dissoc/.test(t)) return QR.trauma;
+  if (/addict|recov|substance|alcohol|drug|chemical/.test(t)) return QR.addiction;
+  if (/anxi|panic|phobia|worry|stress|overwhelm/.test(t)) return QR.anxiety;
+  if (/teen|child|kid|young|adolesc|12|13|14|15|16|17/.test(t)) return QR.teens;
+  if (/service|program|offer|session|coaching|therapy|vip|intensi/.test(t)) return QR.services;
+  return QR.default;
+}
+
+/* ── STATE ── */
+let isOpen     = false;
+let hasGreeted = false;
+let isThinking = false;
+const history  = [];
+
+const root = document.getElementById('tc-chat-root');
+const msgs = document.getElementById('tc-msgs');
+const input= document.getElementById('tc-input');
+const qrEl = document.getElementById('tc-qr');
+
+/* ── HELPERS ── */
+function timeStr() {
+  const d = new Date();
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+function scrollBottom() { msgs.scrollTo({ top: msgs.scrollHeight, behavior: 'smooth' }); }
+
+function addMsg(text, type) {
+  const wrap = document.createElement('div');
+  wrap.className = 'tc-msg ' + type;
+  if (type === 'bot') {
+    const lbl = document.createElement('div');
+    lbl.className = 'tc-bot-label';
+    lbl.textContent = BOT_NAME;
+    wrap.appendChild(lbl);
+  }
+  const bub = document.createElement('div');
+  bub.className = 'tc-bubble';
+  bub.innerHTML = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  const t = document.createElement('div');
+  t.className = 'tc-time';
+  t.textContent = timeStr();
+  wrap.appendChild(bub);
+  wrap.appendChild(t);
+  msgs.appendChild(wrap);
+  scrollBottom();
+  return wrap;
+}
+
+function showTyping() {
+  const w = document.createElement('div');
+  w.className = 'tc-msg bot'; w.id = 'tc-typing-ind';
+  const b = document.createElement('div'); b.className = 'tc-bubble';
+  b.innerHTML = '<div class="tc-typing"><div class="tc-dot"></div><div class="tc-dot"></div><div class="tc-dot"></div></div>';
+  w.appendChild(b); msgs.appendChild(w); scrollBottom();
+}
+function hideTyping() { const t = document.getElementById('tc-typing-ind'); if (t) t.remove(); }
+
+function setQR(chips) {
+  qrEl.innerHTML = '';
+  if (!chips || !chips.length) return;
+  chips.slice(0,4).forEach(label => {
+    const btn = document.createElement('button');
+    btn.className = 'tc-qr-chip';
+    btn.innerHTML = '<span>' + label + '</span>';
+    btn.addEventListener('click', () => sendMessage(label));
+    qrEl.appendChild(btn);
+  });
+}
+function clearQR() { qrEl.innerHTML = ''; }
+
+/* ── Human-feeling typing delay based on reply length ── */
+function humanDelay(replyText) {
+  return Math.min(Math.max(MIN_DELAY, replyText.length * MS_PER_CHAR), 2800);
+}
+
+/* ── SEND TO API ── */
+async function sendMessage(text) {
+  text = text.trim();
+  if (!text || isThinking) return;
+  isThinking = true;
+
+  // Handle contact form locally
+  if (/go to contact|contact form/i.test(text)) {
+    clearQR();
+    addMsg(text, 'user');
+    input.value = ''; autoResizeInput();
+    setTimeout(() => {
+      addMsg("Taking you to Susan's contact form 🌿 She genuinely looks forward to hearing from you.", 'bot');
+      setQR(QR.default);
+      const el = document.getElementById('contact');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      isThinking = false;
+    }, 400);
+    return;
+  }
+
+  // Handle direct phone/email requests locally
+  if (/^(call|phone|number|telephone)$/i.test(text.trim())) {
+    clearQR();
+    addMsg(text, 'user');
+    input.value = ''; autoResizeInput();
+    setTimeout(() => {
+      addMsg("Susan's direct line is **858-414-0411** — feel free to call or text. She's also reachable at urwellsandiego@gmail.com 🌿", 'bot');
+      setQR(QR.book);
+      isThinking = false;
+    }, 500);
+    return;
+  }
+
+  clearQR();
+  addMsg(text, 'user');
+  input.value = ''; autoResizeInput();
+  history.push({ role: 'user', content: text });
+
+  // Show typing indicator after short pause
+  const typingTimer = setTimeout(() => showTyping(), 320);
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: history }),
+    });
+
+    const data = await res.json();
+    const reply = (res.ok && data.reply) ? data.reply
+      : "I'm having a moment — please reach Susan directly at **858-414-0411** or urwellsandiego@gmail.com";
+
+    history.push({ role: 'assistant', content: reply });
+    if (history.length > 24) history.splice(0, 2);
+
+    // Hold typing indicator for human-feeling duration
+    const elapsed = Date.now();
+    const delay = humanDelay(reply);
+    await new Promise(r => setTimeout(r, Math.max(0, delay)));
+
+    clearTimeout(typingTimer);
+    hideTyping();
+    addMsg(reply, 'bot');
+    setQR(pickQR(text + ' ' + reply));
+
+  } catch (err) {
+    clearTimeout(typingTimer);
+    hideTyping();
+    addMsg("I'm having a little trouble connecting right now. You can reach Susan directly:\n📞 858-414-0411\n✉️ urwellsandiego@gmail.com", 'bot');
+    setQR(['Book a free call', 'About Susan', 'Services']);
+  }
+
+  isThinking = false;
+}
+
+/* ── OPEN / CLOSE ── */
+window.tcToggle = function() {
+  isOpen = !isOpen;
+  root.classList.toggle('open', isOpen);
+  document.getElementById('tc-fab').setAttribute('aria-expanded', isOpen);
+
+  if (isOpen) {
+    if (!hasGreeted) {
+      hasGreeted = true;
+      setTimeout(() => {
+        showTyping();
+        fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: [{ role: 'user', content: '__greet__' }] }),
+        })
+        .then(r => r.json())
+        .then(data => {
+          const reply = data.reply || "Hi there 🌿 I'm Susan's practice assistant. Ask me anything about her services, her approach, or how to get started.";
+          // Brief human pause before greeting appears
+          setTimeout(() => {
+            hideTyping();
+            history.push({ role: 'user', content: '__greet__' });
+            history.push({ role: 'assistant', content: reply });
+            addMsg(reply, 'bot');
+            setQR(QR.greet);
+          }, 900);
+        })
+        .catch(() => {
+          setTimeout(() => {
+            hideTyping();
+            addMsg("Hi there 🌿 I'm Susan's practice assistant. I can tell you about her services, her approach to healing, or how to book a free discovery call. What brings you here today?", 'bot');
+            setQR(QR.greet);
+          }, 900);
+        });
+      }, 300);
+    }
+    setTimeout(() => input.focus(), 450);
+  }
+};
+
+/* ── INPUT EVENTS ── */
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input.value); }
+});
+input.addEventListener('input', autoResizeInput);
+document.getElementById('tc-send').addEventListener('click', () => sendMessage(input.value));
+
+function autoResizeInput() {
+  input.style.height = '40px';
+  input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+}
+
+/* ── ESCAPE closes ── */
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) tcToggle(); });
+
+/* ── Welcome tooltip after 6s ── */
+setTimeout(() => {
+  if (isOpen) return;
+  const tip = document.createElement('div');
+  tip.style.cssText = 'position:absolute;bottom:70px;right:0;background:var(--tc-charcoal);color:#fff;padding:.55rem 1.1rem;border-radius:3px;font-size:.76rem;white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.25);border:1px solid rgba(181,113,79,.22);animation:tcMsgIn .35s cubic-bezier(.16,1,.3,1) both;pointer-events:none;';
+  tip.innerHTML = '💬 <em style="font-family:\'Playfair Display\',serif;color:var(--tc-clay)">Ask me anything</em>';
+  const arr = document.createElement('div');
+  arr.style.cssText = 'position:absolute;bottom:-7px;right:18px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:7px solid var(--tc-charcoal);';
+  tip.appendChild(arr);
+  root.appendChild(tip);
+  setTimeout(() => { if (tip.parentNode) tip.remove(); }, 4500);
+}, 6000);
+
+})();
+</script>
+
+<!-- ── CONTACT FORM → local /leads endpoint ── -->
+<script>
+(function(){
+  const form = document.querySelector('.cform');
+  if (!form) return;
+  const btn = form.querySelector('button.btn-solid');
+  const inputs = form.querySelectorAll('input, select, textarea');
+  const [firstName, lastName] = form.querySelectorAll('.frow input');
+  const email = form.querySelector('input[type="email"]');
+  const phone = form.querySelector('input[type="tel"]');
+  const select = form.querySelector('select');
+  const textarea = form.querySelector('textarea');
+
+  function flash(msg, ok) {
+    let box = form.querySelector('.form-flash');
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'form-flash';
+      box.style.cssText = 'margin-top:1rem;padding:.85rem 1rem;border-radius:3px;font-size:.85rem;letter-spacing:.02em;line-height:1.5;';
+      btn.after(box);
+    }
+    box.style.background = ok ? 'rgba(107,155,126,.12)' : 'rgba(200,60,60,.12)';
+    box.style.border = ok ? '1px solid rgba(107,155,126,.4)' : '1px solid rgba(200,60,60,.4)';
+    box.style.color = ok ? 'var(--sage)' : '#c83c3c';
+    box.textContent = msg;
+  }
+
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const payload = {
+      firstName: firstName?.value.trim(),
+      lastName: lastName?.value.trim(),
+      email: email?.value.trim(),
+      phone: phone?.value.trim(),
+      interest: select?.value,
+      message: textarea?.value.trim(),
+    };
+    if (!payload.email && !payload.phone) {
+      flash('Please share either your email or phone so Susan can reach you.', false);
+      return;
+    }
+    btn.disabled = true;
+    const span = btn.querySelector('span');
+    const original = span?.textContent;
+    if (span) span.textContent = 'Sending…';
+    try {
+      const res = await fetch('/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('http-' + res.status);
+      flash("Thank you — your message is with Susan. She'll be in touch shortly 🌿", true);
+      inputs.forEach(el => { if (el.tagName !== 'BUTTON') el.value = ''; });
+    } catch {
+      flash('Something went wrong. Please try calling 858-414-0411 or email urwellsandiego@gmail.com directly.', false);
+    } finally {
+      btn.disabled = false;
+      if (span && original) span.textContent = original;
+    }
+  });
+})();
+</script>
+</body>
+</html>

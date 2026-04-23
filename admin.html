@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UAreWell Admin · Susan Graf-Cote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --clay:#B5714F;--clay-lt:#E8C9B8;--clay-dk:#8C4F32;
+  --sage:#6B9B7E;--sage-lt:#D0E3D8;
+  --cream:#F5F0E8;--ivory:#FBF8F3;
+  --charcoal:#1E1A16;--warm-dk:#2E2520;--mid:#6B5A50;
+  --gold:#C49A5A;--gold-lt:#E8D5A8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Jost',sans-serif;background:var(--charcoal);color:#E8E4DC;min-height:100vh;}
+a{color:var(--clay-lt);text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+
+/* ══ LOGIN ══ */
+#login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:radial-gradient(ellipse at top,rgba(181,113,79,.15),transparent 60%),var(--charcoal);}
+.login-card{background:rgba(255,255,255,.04);border:1px solid rgba(181,113,79,.2);backdrop-filter:blur(18px);padding:2.6rem 2.4rem;max-width:400px;width:100%;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.4);}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:400;color:#fff;letter-spacing:.03em;text-align:center;margin-bottom:.3rem;}
+.login-logo em{color:var(--clay);font-style:italic;}
+.login-sub{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--clay);text-align:center;margin-bottom:2.2rem;}
+.login-card label{display:block;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(232,228,220,.5);margin-bottom:.6rem;}
+.login-card input{width:100%;padding:.85rem 1rem;background:rgba(0,0,0,.3);border:1px solid rgba(181,113,79,.25);border-radius:3px;font-family:inherit;font-size:.95rem;color:#fff;outline:none;transition:border-color .2s,box-shadow .2s;}
+.login-card input:focus{border-color:var(--clay);box-shadow:0 0 0 3px rgba(181,113,79,.15);}
+.login-btn{margin-top:1.3rem;width:100%;padding:.9rem;background:var(--clay);color:#fff;border:none;border-radius:3px;font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:background .2s,transform .08s;}
+.login-btn:hover{background:var(--clay-dk);}
+.login-btn:active{transform:scale(.99);}
+.login-err{margin-top:1rem;font-size:.82rem;color:#e88;display:none;}
+
+/* ══ DASH ══ */
+#dash{display:none;min-height:100vh;}
+.top-bar{background:rgba(0,0,0,.35);border-bottom:1px solid rgba(181,113,79,.2);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.top-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;letter-spacing:.03em;}
+.top-logo em{color:var(--clay);font-style:italic;}
+.top-right{display:flex;gap:1rem;align-items:center;}
+.top-right a{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,228,220,.55);transition:color .2s;}
+.top-right a:hover{color:var(--clay);}
+.logout-btn{background:transparent;border:1px solid rgba(181,113,79,.3);color:var(--clay);padding:.45rem 1rem;border-radius:2px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;transition:all .2s;}
+.logout-btn:hover{background:var(--clay);color:#fff;border-color:var(--clay);}
+
+.tabs{display:flex;gap:.3rem;padding:0 2rem;border-bottom:1px solid rgba(181,113,79,.18);overflow-x:auto;}
+.tab{background:none;border:none;color:rgba(232,228,220,.55);padding:.95rem 1.2rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab:hover{color:#E8E4DC;}
+.tab.act{color:var(--clay);border-bottom-color:var(--clay);}
+
+.pane{display:none;padding:2rem;max-width:1200px;margin:0 auto;}
+.pane.act{display:block;}
+
+/* Shared */
+h2.pane-h{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;color:#fff;margin-bottom:.4rem;}
+h2.pane-h em{color:var(--clay);font-style:italic;}
+.pane-sub{font-size:.78rem;color:rgba(232,228,220,.45);margin-bottom:2rem;letter-spacing:.02em;}
+
+.action-row{display:flex;gap:.8rem;margin-bottom:1.6rem;flex-wrap:wrap;align-items:center;}
+.btn{padding:.65rem 1.3rem;border-radius:2px;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:none;transition:all .2s;}
+.btn.primary{background:var(--clay);color:#fff;}
+.btn.primary:hover{background:var(--clay-dk);}
+.btn.ghost{background:transparent;border:1px solid rgba(181,113,79,.3);color:var(--clay);}
+.btn.ghost:hover{background:rgba(181,113,79,.14);}
+.btn.danger{background:rgba(200,60,60,.65);color:#fff;}
+.btn.danger:hover{background:rgba(200,60,60,.85);}
+
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(181,113,79,.15);border-radius:4px;padding:1.3rem;margin-bottom:1rem;transition:border-color .2s;}
+.card:hover{border-color:rgba(181,113,79,.35);}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.4rem;}
+.card h3{font-family:'Playfair Display',serif;font-weight:500;color:#fff;font-size:1.15rem;margin:0;}
+.card p{color:rgba(232,228,220,.68);font-size:.88rem;line-height:1.6;margin:.3rem 0;}
+.meta{display:flex;gap:1rem;font-size:.72rem;color:rgba(232,228,220,.45);margin-top:.5rem;flex-wrap:wrap;letter-spacing:.02em;}
+.meta .pill{padding:.18rem .7rem;border-radius:50px;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;}
+.pill.published{background:rgba(107,155,126,.18);color:#8bc6a1;border:1px solid rgba(107,155,126,.3);}
+.pill.draft{background:rgba(196,154,90,.15);color:var(--gold-lt);border:1px solid rgba(196,154,90,.3);}
+.pill.hot{background:rgba(200,80,50,.2);color:#ffb19a;border:1px solid rgba(200,80,50,.35);}
+.pill.warm{background:rgba(196,154,90,.15);color:var(--gold-lt);border:1px solid rgba(196,154,90,.3);}
+.pill.cold,.pill.unknown{background:rgba(107,155,126,.15);color:#8bc6a1;border:1px solid rgba(107,155,126,.25);}
+.card-actions{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem;}
+.a-btn{background:rgba(181,113,79,.1);border:1px solid rgba(181,113,79,.25);color:var(--clay-lt);padding:.35rem .8rem;border-radius:2px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;transition:all .15s;}
+.a-btn:hover{background:var(--clay);color:#fff;border-color:var(--clay);}
+.a-btn.publish{border-color:rgba(107,155,126,.4);color:#8bc6a1;}
+.a-btn.publish:hover{background:var(--sage);color:#fff;border-color:var(--sage);}
+.a-btn.danger{border-color:rgba(200,60,60,.35);color:#e88;}
+.a-btn.danger:hover{background:rgba(200,60,60,.6);color:#fff;border-color:rgba(200,60,60,.7);}
+.a-btn.fb-btn{border-color:rgba(24,119,242,.5);color:#9ec1ff;}
+.a-btn.fb-btn:hover{background:#1877F2;color:#fff;border-color:#1877F2;}
+.a-btn .spinner{width:.75rem;height:.75rem;border:1.5px solid currentColor;border-top-color:transparent;border-radius:50%;display:inline-block;margin-right:.4rem;animation:spin .8s linear infinite;vertical-align:-2px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.empty{text-align:center;padding:3rem 1rem;color:rgba(232,228,220,.35);font-size:.92rem;}
+
+/* Editor */
+.editor-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:1.8rem;}
+@media(max-width:900px){.editor-grid{grid-template-columns:1fr;}}
+.field{margin-bottom:1.1rem;}
+.field label{display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,228,220,.55);margin-bottom:.45rem;font-weight:500;}
+.field input,.field textarea,.field select{width:100%;padding:.75rem 1rem;background:rgba(0,0,0,.3);border:1px solid rgba(181,113,79,.2);border-radius:3px;font-family:inherit;font-size:.92rem;color:#fff;outline:none;transition:border-color .2s;}
+.field textarea{resize:vertical;line-height:1.65;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--clay);}
+.field select{cursor:pointer;}
+.ai-panel{background:rgba(181,113,79,.06);border:1px dashed rgba(181,113,79,.3);padding:1.2rem;border-radius:3px;margin-bottom:1.2rem;}
+.ai-panel h4{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--clay);margin-bottom:.7rem;font-weight:500;}
+.ai-row{display:flex;gap:.5rem;}
+.ai-row input{flex:1;}
+.spinner{display:inline-block;width:12px;height:12px;border:1.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;margin-right:.5rem;vertical-align:-2px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;padding:.9rem 1.4rem;background:var(--charcoal);border:1px solid rgba(181,113,79,.3);border-radius:3px;color:#fff;font-size:.88rem;transform:translateY(100px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{border-color:rgba(107,155,126,.5);}
+.toast.error{border-color:rgba(200,60,60,.5);}
+
+/* Confirm */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:1rem;z-index:998;}
+.modal.open{display:flex;}
+.modal-box{background:var(--warm-dk);border:1px solid rgba(181,113,79,.3);padding:1.8rem;border-radius:4px;max-width:420px;width:100%;}
+.modal-box h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;margin-bottom:.6rem;}
+.modal-box p{font-size:.9rem;color:rgba(232,228,220,.7);line-height:1.6;margin-bottom:1.4rem;}
+.modal-actions{display:flex;gap:.6rem;justify-content:flex-end;}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">UAre<em>Well</em></div>
+    <p class="login-sub">Admin Console</p>
+    <label>Password</label>
+    <input type="password" id="pw" placeholder="Enter admin password" autocomplete="current-password"/>
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In</button>
+    <p class="login-err" id="login-err">Incorrect password.</p>
+  </div>
+</div>
+
+<!-- ══ DASH ══ -->
+<div id="dash">
+  <div class="top-bar">
+    <div class="top-logo">UAre<em>Well</em> · Admin</div>
+    <div class="top-right">
+      <a href="/index.html" target="_blank">View Site ↗</a>
+      <a href="/blog.html" target="_blank">View Blog ↗</a>
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab act" data-pane="posts" onclick="switchTab(event,'posts')">Posts</button>
+    <button class="tab" data-pane="editor" onclick="switchTab(event,'editor')">New / Edit</button>
+    <button class="tab" data-pane="leads" onclick="switchTab(event,'leads')">Leads</button>
+    <button class="tab" data-pane="social" onclick="switchTab(event,'social')">Social Queue</button>
+  </div>
+
+  <!-- POSTS -->
+  <div class="pane act" id="pane-posts">
+    <h2 class="pane-h">Blog <em>Posts</em></h2>
+    <p class="pane-sub"><span id="post-count">—</span></p>
+    <div class="action-row">
+      <button class="btn primary" onclick="newPost()">+ New Post</button>
+      <button class="btn ghost" onclick="loadPosts()">Refresh</button>
+    </div>
+    <div id="posts-list"></div>
+  </div>
+
+  <!-- EDITOR -->
+  <div class="pane" id="pane-editor">
+    <h2 class="pane-h"><span id="editor-mode">New</span> <em>Post</em></h2>
+    <p class="pane-sub">Write fresh content or let AI draft one for you from a topic.</p>
+
+    <div class="ai-panel">
+      <h4>⚡ Generate with AI</h4>
+      <div class="ai-row">
+        <input id="ai-topic" placeholder="Topic (e.g. healing anxiety through NLP)"/>
+        <button class="btn primary" id="ai-btn" onclick="aiGenerate()">Generate</button>
+      </div>
+    </div>
+
+    <div class="editor-grid">
+      <div>
+        <div class="field">
+          <label>Title</label>
+          <input id="ed-title"/>
+        </div>
+        <div class="field">
+          <label>Excerpt</label>
+          <textarea id="ed-excerpt" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label>Body (Markdown)</label>
+          <textarea id="ed-body" rows="20"></textarea>
+        </div>
+      </div>
+      <div>
+        <div class="field">
+          <label>Category</label>
+          <select id="ed-category">
+            <option>NLP & Mindset</option>
+            <option>Trauma & Healing</option>
+            <option>Relationships</option>
+            <option>Addiction & Recovery</option>
+            <option>Spiritual Growth</option>
+            <option>Anxiety & Depression</option>
+            <option>Parenting & Family</option>
+            <option>General</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="ed-status" onchange="updateFbHint()">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+          <p id="fb-hint" style="font-size:.72rem;color:#8bc6a1;margin:.4rem 0 0;display:none;">📣 Publishing this will auto-share to the UAreWell Facebook page.</p>
+        </div>
+        <div class="field">
+          <label>Publish Date</label>
+          <input type="date" id="ed-date"/>
+        </div>
+        <div style="display:flex;gap:.6rem;margin-top:1.4rem;">
+          <button class="btn primary" id="save-btn" onclick="savePost()">Save</button>
+          <button class="btn ghost" onclick="newPost()">Cancel</button>
+        </div>
+        <input type="hidden" id="ed-slug"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADS -->
+  <div class="pane" id="pane-leads">
+    <h2 class="pane-h">Captured <em>Leads</em></h2>
+    <p class="pane-sub"><span id="lead-count">—</span> — from contact form and chat assistant.</p>
+    <div class="action-row">
+      <button class="btn ghost" onclick="loadLeads()">Refresh</button>
+    </div>
+    <div id="leads-list"></div>
+  </div>
+
+  <!-- SOCIAL QUEUE -->
+  <div class="pane" id="pane-social">
+    <h2 class="pane-h">Social <em>Queue</em></h2>
+    <p class="pane-sub">Generated captions per published post. Missing creds → copy manually.</p>
+    <div class="action-row">
+      <button class="btn ghost" onclick="loadSocial()">Refresh</button>
+    </div>
+    <div id="social-list"></div>
+  </div>
+</div>
+
+<!-- Toast + Modal -->
+<div class="toast" id="toast"></div>
+<div class="modal" id="confirm-modal">
+  <div class="modal-box">
+    <h4 id="confirm-title">Confirm</h4>
+    <p id="confirm-msg">Are you sure?</p>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeConfirm()">Cancel</button>
+      <button class="btn danger" id="confirm-yes">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let token = localStorage.getItem('uarewell-admin-token') || '';
+let editingSlug = null;
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function fmtDate(d) {
+  if (!d) return '—';
+  const x = new Date(d);
+  return isNaN(x) ? d : x.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+}
+function fmtDT(d) {
+  if (!d) return '—';
+  const x = new Date(d);
+  return isNaN(x) ? d : x.toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+}
+
+function toast(msg, kind='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + kind;
+  setTimeout(() => t.className = 'toast ' + kind, 2600);
+}
+
+function showConfirm({ title, message, onConfirm }) {
+  document.getElementById('confirm-title').textContent = title || 'Confirm';
+  document.getElementById('confirm-msg').textContent = message || 'Are you sure?';
+  const yes = document.getElementById('confirm-yes');
+  yes.onclick = () => { closeConfirm(); onConfirm(); };
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeConfirm() { document.getElementById('confirm-modal').classList.remove('open'); }
+
+async function api(path, opts = {}) {
+  const res = await fetch(path, {
+    ...opts,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      ...(opts.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(opts.headers || {}),
+    },
+  });
+  if (res.status === 401) { logout(); throw new Error('unauthorized'); }
+  return res;
+}
+
+/* ── LOGIN ── */
+async function doLogin() {
+  const pw = document.getElementById('pw').value.trim();
+  const err = document.getElementById('login-err');
+  err.style.display = 'none';
+  if (!pw) return;
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Checking…';
+  try {
+    const res = await fetch('/admin/login', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${pw}`, 'Content-Type': 'application/json' },
+      body: '{}',
+    });
+    if (!res.ok) throw new Error();
+    token = pw;
+    localStorage.setItem('uarewell-admin-token', token);
+    showDash();
+  } catch {
+    err.textContent = 'Incorrect password. If this is a new install, check server/.env for ADMIN_PASSWORD.';
+    err.style.display = 'block';
+  }
+  btn.disabled = false; btn.textContent = 'Sign In';
+}
+
+function logout() {
+  token = '';
+  localStorage.removeItem('uarewell-admin-token');
+  document.getElementById('dash').style.display = 'none';
+  document.getElementById('login-wrap').style.display = 'flex';
+  document.getElementById('pw').value = '';
+}
+
+function showDash() {
+  document.getElementById('login-wrap').style.display = 'none';
+  document.getElementById('dash').style.display = 'block';
+  loadPosts();
+}
+
+/* ── TABS ── */
+function switchTab(ev, name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('act'));
+  ev.currentTarget.classList.add('act');
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('act'));
+  document.getElementById('pane-' + name).classList.add('act');
+  if (name === 'posts') loadPosts();
+  if (name === 'leads') loadLeads();
+  if (name === 'social') loadSocial();
+}
+
+/* ── POSTS ── */
+async function loadPosts() {
+  const list = document.getElementById('posts-list');
+  list.innerHTML = '<p class="empty">Loading…</p>';
+  try {
+    const res = await api('/admin/posts');
+    const posts = await res.json();
+    document.getElementById('post-count').textContent = posts.length + ' post' + (posts.length !== 1 ? 's' : '');
+    if (!posts.length) { list.innerHTML = '<p class="empty">No posts yet. Click "+ New Post" or run `npm run generate-blog` from the server folder.</p>'; return; }
+    list.innerHTML = posts.map(p => `
+      <div class="card">
+        <div class="card-head">
+          <div style="flex:1;">
+            <h3>${esc(p.title)}</h3>
+            <p>${esc(p.excerpt || '')}</p>
+            <div class="meta">
+              <span class="pill ${p.status}">${p.status}</span>
+              <span>${esc(p.category)}</span>
+              <span>${fmtDate(p.date)}</span>
+              <span>${esc(p.readTime || '')}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="a-btn" onclick="editPost('${esc(p.slug)}')">Edit</button>
+          ${p.status === 'draft'
+            ? `<button class="a-btn publish" onclick="togglePublish('${esc(p.slug)}','published')">Publish</button>`
+            : `<button class="a-btn" onclick="togglePublish('${esc(p.slug)}','draft')">Unpublish</button>`}
+          <button class="a-btn fb-btn" onclick="republishSocial('${esc(p.slug)}', this)" title="Post this blog to the UAreWell Facebook page">📣 Post to Facebook</button>
+          <button class="a-btn danger" onclick="deletePost('${esc(p.slug)}')">Delete</button>
+        </div>
+      </div>`).join('');
+  } catch (err) {
+    list.innerHTML = '<p class="empty">Failed to load posts.</p>';
+  }
+}
+
+function newPost() {
+  editingSlug = null;
+  document.getElementById('editor-mode').textContent = 'New';
+  document.getElementById('ed-slug').value = '';
+  document.getElementById('ed-title').value = '';
+  document.getElementById('ed-excerpt').value = '';
+  document.getElementById('ed-body').value = '';
+  document.getElementById('ed-category').value = 'NLP & Mindset';
+  document.getElementById('ed-status').value = 'draft';
+  document.getElementById('ed-date').value = new Date().toISOString().split('T')[0];
+  updateFbHint();
+  const tab = document.querySelector('.tab[data-pane="editor"]');
+  switchTab({ currentTarget: tab }, 'editor');
+}
+
+async function editPost(slug) {
+  const res = await api('/admin/posts/' + encodeURIComponent(slug));
+  if (!res.ok) return toast('Could not load post', 'error');
+  const p = await res.json();
+  editingSlug = slug;
+  document.getElementById('editor-mode').textContent = 'Edit';
+  document.getElementById('ed-slug').value = slug;
+  document.getElementById('ed-title').value = p.title || '';
+  document.getElementById('ed-excerpt').value = p.excerpt || '';
+  document.getElementById('ed-body').value = p.body || '';
+  document.getElementById('ed-category').value = p.category || 'General';
+  document.getElementById('ed-status').value = p.status || 'draft';
+  document.getElementById('ed-date').value = p.date || '';
+  updateFbHint();
+  const tab = document.querySelector('.tab[data-pane="editor"]');
+  switchTab({ currentTarget: tab }, 'editor');
+}
+
+function updateFbHint() {
+  const sel = document.getElementById('ed-status');
+  const hint = document.getElementById('fb-hint');
+  if (!sel || !hint) return;
+  hint.style.display = sel.value === 'published' ? 'block' : 'none';
+}
+
+async function savePost() {
+  const title = document.getElementById('ed-title').value.trim();
+  if (!title) return toast('Title is required', 'error');
+  const status = document.getElementById('ed-status').value;
+  const body = {
+    title,
+    excerpt: document.getElementById('ed-excerpt').value.trim(),
+    body: document.getElementById('ed-body').value,
+    category: document.getElementById('ed-category').value,
+    status,
+    date: document.getElementById('ed-date').value || new Date().toISOString().split('T')[0],
+  };
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Saving…';
+  try {
+    const res = editingSlug
+      ? await api('/admin/posts/' + encodeURIComponent(editingSlug), { method: 'PUT', body: JSON.stringify(body) })
+      : await api('/admin/posts', { method: 'POST', body: JSON.stringify(body) });
+    if (!res.ok) throw new Error();
+    if (status === 'published') {
+      toast('Published ✓ — auto-sharing to Facebook in the background…');
+    } else {
+      toast(editingSlug ? 'Post updated ✓' : 'Post created ✓');
+    }
+    const tab = document.querySelector('.tab[data-pane="posts"]');
+    switchTab({ currentTarget: tab }, 'posts');
+  } catch {
+    toast('Save failed', 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Save';
+}
+
+async function togglePublish(slug, status) {
+  try {
+    const res = await api('/admin/posts/' + encodeURIComponent(slug), { method: 'PUT', body: JSON.stringify({ status }) });
+    if (!res.ok) throw new Error();
+    toast(status === 'published' ? 'Published ✓' : 'Unpublished');
+    loadPosts();
+  } catch { toast('Update failed', 'error'); }
+}
+
+function deletePost(slug) {
+  showConfirm({
+    title: 'Delete post?',
+    message: 'This cannot be undone.',
+    onConfirm: async () => {
+      try {
+        const res = await api('/admin/posts/' + encodeURIComponent(slug), { method: 'DELETE' });
+        if (!res.ok) throw new Error();
+        toast('Post deleted');
+        loadPosts();
+      } catch { toast('Delete failed', 'error'); }
+    },
+  });
+}
+
+async function republishSocial(slug, btn) {
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Posting…'; }
+  toast('Posting to Facebook…');
+  try {
+    const res = await api('/admin/posts/' + encodeURIComponent(slug) + '/publish-social', { method: 'POST', body: '{}' });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const fb = data?.results?.facebook;
+    if (fb?.ok && fb.id) {
+      const [pageId, postId] = String(fb.id).split('_');
+      const url = postId ? `https://www.facebook.com/${pageId}/posts/${postId}` : null;
+      toast(url ? `Posted to Facebook ✓` : 'Posted to Facebook ✓');
+      if (url) {
+        const t = document.getElementById('toast');
+        t.innerHTML = `Posted to Facebook ✓ <a href="${url}" target="_blank" style="color:#fff;text-decoration:underline;margin-left:.4rem;">View post →</a>`;
+      }
+    } else {
+      const reason = fb?.reason || 'unknown error';
+      toast(`Facebook failed: ${reason}`, 'error');
+    }
+  } catch {
+    toast('Social publish failed', 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '📣 Post to Facebook'; }
+  }
+}
+
+async function aiGenerate() {
+  const topic = document.getElementById('ai-topic').value.trim();
+  if (!topic) return toast('Enter a topic first', 'error');
+  const category = document.getElementById('ed-category').value;
+  const btn = document.getElementById('ai-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Writing…';
+  try {
+    const res = await api('/admin/ai-write', { method: 'POST', body: JSON.stringify({ topic, category }) });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    document.getElementById('ed-title').value = data.title || '';
+    document.getElementById('ed-excerpt').value = data.excerpt || '';
+    document.getElementById('ed-body').value = data.body || '';
+    if (data.category) document.getElementById('ed-category').value = data.category;
+    toast('AI draft ready ✓');
+  } catch { toast('AI generation failed', 'error'); }
+  btn.disabled = false; btn.textContent = 'Generate';
+}
+
+/* ── LEADS ── */
+async function loadLeads() {
+  const list = document.getElementById('leads-list');
+  list.innerHTML = '<p class="empty">Loading…</p>';
+  try {
+    const res = await api('/admin/leads');
+    const leads = await res.json();
+    document.getElementById('lead-count').textContent = leads.length + ' lead' + (leads.length !== 1 ? 's' : '');
+    if (!leads.length) { list.innerHTML = '<p class="empty">No leads yet. Try the chat widget or contact form.</p>'; return; }
+    list.innerHTML = leads.map(l => `
+      <div class="card">
+        <div class="card-head">
+          <div style="flex:1;">
+            <h3>${esc(l.name || l.email || l.phone || 'Anonymous')}</h3>
+            <p>
+              ${l.email ? `<a href="mailto:${esc(l.email)}">${esc(l.email)}</a> · ` : ''}
+              ${l.phone ? `<a href="tel:${esc(l.phone)}">${esc(l.phone)}</a>` : ''}
+            </p>
+            ${l.message ? `<p style="margin-top:.6rem;font-style:italic;">"${esc(l.message)}"</p>` : ''}
+            ${l.notes ? `<p style="margin-top:.6rem;opacity:.7;">${esc(l.notes)}</p>` : ''}
+            <div class="meta">
+              <span class="pill ${esc(l.intent || 'unknown')}">${esc(l.intent || 'unknown')}</span>
+              <span>Source: ${esc(l.source)}</span>
+              ${l.interest ? `<span>Interest: ${esc(l.interest)}</span>` : ''}
+              <span>${fmtDT(l.createdAt)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          ${l.transcript?.length ? `<button class="a-btn" onclick="showTranscript('${esc(l.id)}')">Transcript</button>` : ''}
+          <button class="a-btn danger" onclick="deleteLead('${esc(l.id)}')">Delete</button>
+        </div>
+        <pre id="tr-${esc(l.id)}" style="display:none;margin-top:.8rem;padding:.8rem 1rem;background:rgba(0,0,0,.35);border-radius:3px;font-size:.78rem;line-height:1.6;white-space:pre-wrap;color:rgba(232,228,220,.75);max-height:260px;overflow:auto;">${esc((l.transcript||[]).map(m => (m.role === 'user' ? 'Visitor: ' : 'Assistant: ') + m.content).join('\n\n'))}</pre>
+      </div>`).join('');
+  } catch {
+    list.innerHTML = '<p class="empty">Failed to load leads.</p>';
+  }
+}
+
+function showTranscript(id) {
+  const el = document.getElementById('tr-' + id);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function deleteLead(id) {
+  showConfirm({
+    title: 'Delete lead?',
+    message: 'This removes the record permanently.',
+    onConfirm: async () => {
+      try {
+        const res = await api('/admin/leads/' + encodeURIComponent(id), { method: 'DELETE' });
+        if (!res.ok) throw new Error();
+        toast('Lead deleted');
+        loadLeads();
+      } catch { toast('Delete failed', 'error'); }
+    },
+  });
+}
+
+/* ── SOCIAL QUEUE ── */
+async function loadSocial() {
+  const list = document.getElementById('social-list');
+  list.innerHTML = '<p class="empty">Loading…</p>';
+  try {
+    const res = await api('/admin/social-queue');
+    const items = await res.json();
+    if (!items.length) { list.innerHTML = '<p class="empty">Nothing queued yet. Publish a post to generate captions.</p>'; return; }
+    list.innerHTML = items.map(q => {
+      const fb = q.results?.facebook;
+      let fbStatusBadge;
+      if (fb?.ok && fb.id) {
+        const [pageId, postId] = String(fb.id).split('_');
+        const fbUrl = postId ? `https://www.facebook.com/${pageId}/posts/${postId}` : null;
+        fbStatusBadge = fbUrl
+          ? `<a href="${fbUrl}" target="_blank" style="color:#8bc6a1;font-size:.7rem;text-decoration:underline;">✓ Live on Facebook →</a>`
+          : `<span style="color:#8bc6a1;font-size:.7rem;">✓ Posted to Facebook</span>`;
+      } else if (fb?.reason) {
+        fbStatusBadge = `<span style="color:#e29a8c;font-size:.7rem;">✗ Facebook: ${esc(fb.reason)}</span>`;
+      } else {
+        fbStatusBadge = `<span style="opacity:.5;font-size:.7rem;">queued</span>`;
+      }
+      return `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;">
+          <div>
+            <h3>${esc(q.postTitle)}</h3>
+            <p style="font-size:.78rem;opacity:.6;">${fmtDT(q.createdAt)}</p>
+          </div>
+          <div>${fbStatusBadge}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.8rem;margin-top:1rem;">
+          ${['facebook','instagram','linkedin','x'].map(k => `
+            <div style="background:rgba(0,0,0,.25);padding:.9rem;border-radius:3px;border:1px solid ${k==='facebook' ? 'rgba(139,198,161,.4)' : 'rgba(181,113,79,.15)'};">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;">
+                <strong style="font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:${k==='facebook' ? '#8bc6a1' : 'var(--clay)'};">${k}${k==='facebook' ? ' (live)' : ''}</strong>
+                <span style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;${q.results?.[k]?.ok ? 'color:#8bc6a1' : 'color:rgba(232,228,220,.35)'}">${q.results?.[k]?.ok ? '✓ posted' : (q.results?.[k]?.reason || 'queued')}</span>
+              </div>
+              <pre style="white-space:pre-wrap;font-family:inherit;font-size:.82rem;line-height:1.5;color:rgba(232,228,220,.85);">${esc(q.captions?.[k] || '')}</pre>
+              <button class="a-btn" style="margin-top:.5rem;" onclick="copyText(this,${JSON.stringify(q.captions?.[k] || '').replace(/"/g,'&quot;')})">Copy</button>
+            </div>`).join('')}
+        </div>
+      </div>`;
+    }).join('');
+  } catch {
+    list.innerHTML = '<p class="empty">Failed to load social queue.</p>';
+  }
+}
+
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const old = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = old, 1400);
+  });
+}
+
+/* ── INIT ── */
+document.getElementById('pw').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('ed-date').value = new Date().toISOString().split('T')[0];
+
+// If token exists, try silent login
+if (token) {
+  fetch('/admin/login', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: '{}',
+  }).then(r => {
+    if (r.ok) showDash();
+    else { token = ''; localStorage.removeItem('uarewell-admin-token'); }
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>

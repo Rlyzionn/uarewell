@@ -1,0 +1,38 @@
+# ─── Secrets ───────────────────────────────────────
+.env
+*.env
+!.env.example
+server/.env
+server/*.env
+!server/.env.example
+
+# ─── Node ──────────────────────────────────────────
+node_modules/
+server/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# ─── App data (runtime-generated) ──────────────────
+server/data/*.json
+!server/data/.gitkeep
+
+# ─── OS junk ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Editors ───────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+
+# ─── Logs ──────────────────────────────────────────
+*.log
+logs/
+
+# ─── Misc ──────────────────────────────────────────
+*.tmp
+*.bak
