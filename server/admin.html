@@ -149,6 +149,23 @@ h2.pane-h em{color:var(--clay);font-style:italic;}
     </div>
   </div>
 
+  <!-- Auto-posting status banner -->
+  <div id="scheduler-bar" style="margin:1rem 1.5rem 0;padding:.75rem 1rem;border:1px solid rgba(255,255,255,.08);border-radius:4px;background:rgba(255,255,255,.02);display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;font-size:.78rem;">
+    <div style="display:flex;align-items:center;gap:.6rem;">
+      <span style="font-size:1.05rem;">🤖</span>
+      <strong style="letter-spacing:.05em;">Auto-posting</strong>
+      <span id="sched-pill" class="pill draft" style="font-size:.62rem;">LOADING…</span>
+    </div>
+    <div id="sched-info" style="color:#aaa;flex:1;min-width:220px;">—</div>
+    <div style="display:flex;gap:.4rem;">
+      <button class="a-btn" id="sched-toggle" onclick="toggleScheduler()" disabled>—</button>
+      <button class="a-btn" id="sched-run" onclick="runSchedulerNow(this)" title="Generate + post one blog right now (ignores the pause flag)">▶ Run now</button>
+    </div>
+    <div style="flex-basis:100%;color:#888;font-size:.68rem;">
+      Only affects AI-generated scheduled posts. Manual posts and manual "Post to Facebook" buttons always work.
+    </div>
+  </div>
+
   <div class="tabs">
     <button class="tab act" data-pane="posts" onclick="switchTab(event,'posts')">Posts</button>
     <button class="tab" data-pane="editor" onclick="switchTab(event,'editor')">New / Edit</button>
@@ -350,6 +367,9 @@ function showDash() {
   document.getElementById('login-wrap').style.display = 'none';
   document.getElementById('dash').style.display = 'block';
   loadPosts();
+  loadScheduler();
+  // refresh status every 60s so "Next run" stays live
+  if (!window._schedTimer) window._schedTimer = setInterval(loadScheduler, 60000);
 }
 
 /* ── TABS ── */
@@ -656,6 +676,86 @@ function copyText(btn, text) {
     btn.textContent = 'Copied ✓';
     setTimeout(() => btn.textContent = old, 1400);
   });
+}
+
+/* ── SCHEDULER ── */
+async function loadScheduler() {
+  const pill = document.getElementById('sched-pill');
+  const info = document.getElementById('sched-info');
+  const btn = document.getElementById('sched-toggle');
+  try {
+    const res = await api('/admin/scheduler');
+    if (!res.ok) throw new Error('load-failed');
+    const s = await res.json();
+    if (s.paused) {
+      pill.className = 'pill hot';
+      pill.textContent = 'PAUSED';
+      btn.textContent = '▶ Resume';
+      btn.className = 'a-btn publish';
+    } else {
+      pill.className = 'pill published';
+      pill.textContent = 'ACTIVE';
+      btn.textContent = '⏸ Pause';
+      btn.className = 'a-btn';
+    }
+    btn.disabled = false;
+    const parts = [];
+    parts.push(`Schedule: <strong>${s.times.join(', ')}</strong> (${s.times.length}×/day)`);
+    if (s.nextRun && !s.paused) parts.push(`Next: <strong>${fmtDT(s.nextRun)}</strong>`);
+    if (s.paused && s.pausedAt) parts.push(`Paused since <strong>${fmtDT(s.pausedAt)}</strong>`);
+    if (s.lastRun) {
+      const r = s.lastResult;
+      const tag = r?.ok ? `✓ ${r.title || ''}` : (r?.skipped ? `⏭ skipped (${r.skipped})` : `✗ ${r?.error || 'failed'}`);
+      parts.push(`Last run: <strong>${fmtDT(s.lastRun)}</strong> — ${tag}`);
+    }
+    info.innerHTML = parts.join(' · ');
+  } catch {
+    pill.className = 'pill draft';
+    pill.textContent = 'UNKNOWN';
+    info.textContent = 'Failed to load scheduler status.';
+    btn.disabled = true;
+  }
+}
+
+async function toggleScheduler() {
+  const btn = document.getElementById('sched-toggle');
+  btn.disabled = true;
+  const orig = btn.textContent;
+  btn.innerHTML = '<span class="spinner"></span>…';
+  try {
+    const res = await api('/admin/scheduler/toggle', { method: 'POST' });
+    if (!res.ok) throw new Error('toggle-failed');
+    const s = await res.json();
+    toast(s.paused ? 'Auto-posting paused' : 'Auto-posting resumed');
+    await loadScheduler();
+  } catch {
+    btn.textContent = orig;
+    btn.disabled = false;
+    toast('Toggle failed');
+  }
+}
+
+async function runSchedulerNow(btn) {
+  if (!confirm('Generate and publish a new blog post right now? This will also auto-post to Facebook.')) return;
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Working…';
+  try {
+    const res = await api('/admin/scheduler/run', { method: 'POST', body: JSON.stringify({ force: true }) });
+    const r = await res.json();
+    if (r.ok) {
+      toast(`Published "${r.title}"`);
+    } else {
+      toast(`Run failed: ${r.skipped || r.error || 'unknown'}`);
+    }
+    await loadScheduler();
+    loadPosts();
+  } catch (err) {
+    toast('Run failed');
+  } finally {
+    btn.innerHTML = orig;
+    btn.disabled = false;
+  }
 }
 
 /* ── INIT ── */

@@ -8,7 +8,9 @@ import chatRoute from './routes/chat.js';
 import cmsRoute from './routes/cms.js';
 import leadsRoute from './routes/leads.js';
 import adminAuth from './routes/admin-auth.js';
+import schedulerRoute from './routes/scheduler.js';
 import { isEmailEnabled } from './lib/email.js';
+import { startInProcess as startScheduler } from './lib/scheduler.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE_ROOT = path.resolve(__dirname); // server/ (contains index.html, blog.html, admin.html, images/)
@@ -33,6 +35,7 @@ app.use('/', chatRoute);
 app.use('/', leadsRoute);
 app.use('/', cmsRoute);
 app.use('/', adminAuth);
+app.use('/', schedulerRoute);
 
 app.get('/health', (_req, res) => {
   res.json({
@@ -54,4 +57,6 @@ app.listen(PORT, () => {
   console.log(` OpenRouter: ${process.env.OPENROUTER_API_KEY ? 'configured' : 'MISSING'}`);
   console.log(` Email:      ${isEmailEnabled() ? 'configured' : 'disabled (leads save to file)'}`);
   console.log('────────────────────────────────────────────');
+  // Kick off the in-process blog scheduler (checks BLOG_TIMES, respects pause flag)
+  try { startScheduler(); } catch (err) { console.error('[scheduler] failed to start:', err.message); }
 });
